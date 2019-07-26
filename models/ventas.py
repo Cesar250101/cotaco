@@ -81,6 +81,7 @@ class ExcepcionesVenta(models.Model):
     instrucciones_cliente = fields.Text(compute='_Instrucciones_Cliente')
     observaciones = fields.Char(string="Obs.Venta", related='partner_id.obs_venta')
 
+    @api.onchange('partner_id')
     def _Instrucciones_Cliente(self):
         self.instrucciones_cliente = " "
 
