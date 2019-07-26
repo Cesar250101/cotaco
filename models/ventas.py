@@ -9,6 +9,7 @@ from odoo import exceptions
 from odoo.tools import DEFAULT_SERVER_DATE_FORMAT as DATE_FORMAT, DEFAULT_SERVER_DATETIME_FORMAT as DATETIME_FORMAT
 
 
+
 class Cliente(models.Model):
     _inherit = 'res.partner'
     _rec_name = 'display_name'
