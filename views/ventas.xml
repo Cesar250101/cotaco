@@ -1,0 +1,169 @@
+<odoo>
+  <data>
+
+      <!-- Inherit Form View to Modify it -->
+    <record id="sale.view_order_tree_cotaco" model="ir.ui.view">
+        <field name="name">sale.view.order.tree.cotaco</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='invoice_status']" position="after">
+                <field name="despacho_cotaco" />
+            </xpath>
+        </field>
+    </record>
+
+      <!-- Inherit Form View to Modify it -->
+    <record id="sale.view_order_form_cotaco" model="ir.ui.view">
+        <field name="name">sale.view.order.form.cotaco</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//notebook" position="before">
+                <div class="alert alert-info" role="alert" style="margin-bottom:0px" attrs="{'invisible': [('instrucciones_cliente', '=', ' ')]}">
+                    <div align="center">
+                        <strong>Instrucciones del cliente </strong>
+                    </div>
+                    <field name="instrucciones_cliente" />
+                </div>
+            </xpath>
+            <notebook position="inside">
+                <page string = "Instrucciones Cliente">
+                    <group>
+                        <group>
+                            <field name="despacho_representante" />
+                            <field name="es_muestra" />
+                            <field name="retira_cliente" />
+                        </group>
+                        <group>
+                            <field name="horario_cliente" />
+                            <field name="ficha_tecnica" />
+                            <field name="hoja_seguridad" />
+                            <field name="especificar_oc" />
+                            <field name="especificar_hes" />
+                            <field name="despacha_guia" />
+
+                        </group>
+                    </group>
+                </page>
+                <page string = "Despacho por Cuenta de Cotaco">
+                    <group>
+                        <group>
+                            <field name="despacho_cotaco" />
+                            <field name="transporte" attrs="{'invisible': [('despacho_cotaco', '=', False)]}"/>
+                            <field name="valor_transporte" attrs="{'invisible': [('despacho_cotaco', '=', False)]}"/>
+                        </group>
+                    </group>
+                </page>
+
+            </notebook>
+            <xpath expr="//tree/field[@name='price_unit']" position="before">
+                <field name="item_precios"/>
+            </xpath>
+
+        </field>
+    </record>
+
+
+<!--       Inherit Form View to Modify it-->
+      <record id="base.view_partner_form_cotaco" model="ir.ui.view">
+          <field name="name">base.view.partner.form.cotaco</field>
+          <field name="model">res.partner</field>
+          <field name="inherit_id" ref="base.view_partner_form"/>
+          <field name="arch" type="xml">
+              <notebook position="inside">
+                  <page string = "instrucciones Cliente">
+                      <group>
+                          <group>
+                              <field name="hora_entrega" />
+                              <field name="ficha_tecnica" />
+                              <field name="hoja_seguridad" />
+                              <field name="especificar_oc" />
+                              <field name="especificar_hes" />
+                              <field name="despacha_guia" />
+                          </group>
+                          <group>
+                              <field name="obs_venta"/>
+                          </group>
+                      </group>
+                  </page>
+              </notebook>
+
+          </field>
+      </record>
+
+
+
+
+    <record id="product.product_pricelist_item_form_view_cotaco" model="ir.ui.view">
+        <field name="name">product.product.pricelist.item.form.view.cotaco</field>
+        <field name="model">product.pricelist.item</field>
+        <field name="inherit_id" ref="product.product_pricelist_item_form_view"/>
+        <field name="arch" type="xml">
+                <field name="product_id" position="after">
+                    <field name="comision" />
+                </field>
+        </field>
+    </record>
+
+    <record id="product.product_pricelist_item_tree_view_cotaco" model="ir.ui.view">
+        <field name="name">product.product.pricelist.item.tree.view.cotaco</field>
+        <field name="model">product.pricelist.item</field>
+        <field name="inherit_id" ref="product.product_pricelist_item_tree_view"/>
+        <field name="arch" type="xml">
+                <field name="date_end" position="after">
+                    <field name="comision" />
+                </field>
+        </field>
+    </record>
+
+
+    <record model="ir.ui.view" id="view_comision_tramo_tree">
+        <field name="name">view.comision.tramo.tree</field>
+        <field name="model">comision.tramo</field>
+        <field name="priority" eval="16"/>
+        <field name="arch" type="xml">
+          <tree string="Tramos">
+              <field name="desde"  width="20px"/>
+              <field name="hasta"  width="20px"/>
+              <field name="comision"  width="20px"/>
+          </tree>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="action_comision_tramos">
+        <field name="name">Tramos de Comisión</field>
+        <field name="res_model">comision.tramo</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+    <menuitem id="menu_comision_tramos" parent="l10n_cl_hr.menu_cl_hr_payroll_configuration" name="Tramos Comisión" sequence="10"
+          action="action_comision_tramos"/>
+
+    <record model="ir.ui.view" id="view_comision_factorizacion_tree">
+        <field name="name">view.comision.factorizacion.tree</field>
+        <field name="model">comision.factorizacion</field>
+        <field name="priority" eval="16"/>
+        <field name="arch" type="xml">
+          <tree string="Factorización">
+              <field name="descuento"  width="20px"/>
+              <field name="factor"  width="20px"/>
+          </tree>
+        </field>
+    </record>
+
+
+
+
+    <record model="ir.actions.act_window" id="action_comision_factorizacion">
+        <field name="name">Factorización Comisión</field>
+        <field name="res_model">comision.factorizacion</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem id="menu_comision_factorizacion" parent="l10n_cl_hr.menu_cl_hr_payroll_configuration" name="Factorización Comisión" sequence="11"
+          action="action_comision_factorizacion"/>
+
+
+
+  </data>
+</odoo>

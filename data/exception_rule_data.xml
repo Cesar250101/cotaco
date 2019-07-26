@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="1">
+    <record id="credit_limit_exceeded" model="exception.rule">
+        <field name="name">check Duplicate Order</field>
+        <field name="description">Customer already has an order entered for the same value during this week</field>
+        <field name="sequence">11</field>
+        <field name="model">sale.order</field>
+        <field name="rule_group">sale</field>
+        <field name="code">if not object.check_duplicate_order():
+      failed = True</field>
+        <field name="active" eval="True"/>
+    </record>
+
+    <record id="check_protested_checks" model="exception.rule">
+        <field name="name">Check.Protested.Checks</field>
+        <field name="description">Valid if the customer has protested checks.</field>
+        <field name="sequence">13</field>
+        <field name="model">sale.order</field>
+        <field name="rule_group">sale</field>
+        <field name="code">if not object.check_protested_checks():
+      failed = True</field>
+        <field name="active" eval="True"/>
+    </record>
+</odoo>

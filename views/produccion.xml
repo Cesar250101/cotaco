@@ -1,0 +1,17 @@
+<odoo>
+  <data>
+
+
+<!--      <record id="cotaco.mrp_bom_form_view" model="ir.ui.view">-->
+<!--        <field name="name">cotaco.mrp.bom.form.view</field>-->
+<!--        <field name="model">mrp.bom.line</field>-->
+<!--        <field name="inherit_id" ref="mrp.mrp_bom_form_view"/>-->
+<!--        <field name="arch" type="xml">-->
+<!--            <xpath expr="//tree/field[@name='operation_id']" position="after">-->
+<!--                <field name="densidad" />-->
+<!--            </xpath>-->
+<!--        </field>-->
+<!--    </record>-->
+
+  </data>
+</odoo>
