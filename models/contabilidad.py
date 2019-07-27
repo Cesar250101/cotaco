@@ -78,6 +78,8 @@ class RendicionGastos(models.Model):
             ('account_id', 'in', cuentas),
             ('partner_id', '=', self.employee_id.address_home_id.id),
             ('reconciled', '=', False),
+            ('move_id.state', '=', 'posted'),
+            ('debit', '>', 0),
         ]
 
         fondos_pendientes=self.env['account.move.line'].search(domain)
