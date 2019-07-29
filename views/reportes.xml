@@ -1,0 +1,137 @@
+<odoo>
+  <data>
+    <record model="ir.ui.view" id="attendance_recap_report_wizard">
+        <field name="name">Reporte Transportes Realizados</field>
+        <field name="model">cotaco.cobranza.report.wizard</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="Reporte de Cobranzas">
+                <group>
+                    <group>
+                        <field name="date_ini"/>
+                        <field name="date_end"/>
+                    </group>
+                </group>
+                <footer>
+                    <button name="get_report" string="Obtener Reporte" type="object" class="oe_highlight"/>
+                    <button string="Cancel" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <act_window id="action_transportes_report_wizard"
+                name="Reporte Transportes Realizados"
+                res_model="cotaco.cobranza.report.wizard"
+                view_mode="form"
+                target="new"/>
+
+    <menuitem action="action_transportes_report_wizard"
+              id="menu_transportes_report_wizard"
+              parent="account.menu_finance_reports"/>
+
+    <record model="report.paperformat" id="paperformat_attendance_recap_report">
+        <field name="name">paperformat.attendance.recap.report</field>
+        <field name="default" eval="True"/>
+        <field name="format">A4</field>
+        <field name="page_width">0</field>
+        <field name="page_width">0</field>
+        <field name="orientation">Portrait</field>
+        <field name="margin_top">45</field>
+        <field name="margin_right">5</field>
+        <field name="margin_bottom">25</field>
+        <field name="margin_left">5</field>
+        <field name="header_line" eval="False"/>
+        <field name="header_spacing">20</field>
+        <field name="dpi">90</field>
+    </record>
+
+    <report id="recap_report"
+            model="cotaco.cobranza.report.wizard"
+            string="Attendance Recap Report"
+            report_type="qweb-html"
+            name="cotaco.attendance_recap_report_view"
+            paperformat="paperformat_attendance_recap_report"
+            menu="False"/>
+
+    <template id="attendance_recap_report_view">
+        <!--<t t-call="web.external_layout">-->
+        <div class="page" style="padding-top:55px;">
+        <div class="header" style="border-bottom: 2px solid black">
+            <h3 class="text-center">Reporte de Facturas Pendientes de Pago</h3>
+            <h4 class="text-center">
+                <strong>Cliente</strong>:
+                <t t-esc="nombreCliente"/>
+                <strong>Fecha Final</strong>:
+                <t t-esc="date_end"/>
+            </h4>
+        </div>
+        <div class="article">
+            <table class="table table-condensed table-bordered" style="width: 100%">
+                <thead>
+                    <th class="text-left" style="width: 10%">Chofer</th>
+                    <th class="text-center" style="width: 10%">Patente</th>
+                    <th class="text-right" style="width: 10%">NumeroPedido</th>
+                    <th class="text-right" style="width: 10%">Fecha</th>
+                    <th class="text-right" style="width: 50%">Detalle</th>
+                    <th class="text-right" style="width: 10%">Valor</th>
+
+                </thead>
+                <tbody>
+                    <t t-foreach="docs" t-as="doc">
+                        <tr>
+                            <td class="text-left">
+                                <span t-esc="doc['Chofer']"/>
+                            </td>
+                            <td class="text-center">
+                                <span t-esc="doc['Patente']"/>
+                            </td>
+                            <td class="text-right">
+                                <span t-esc="doc['NumeroPedido']"/>
+                            </td>
+                            <td class="text-right">
+                                <span t-esc="doc['Fecha']"/>
+                            </td>
+                            <td class="text-right">
+                                <span t-esc="doc['Detalle']"/>
+                            </td>
+                            <td class="text-right">
+                                <span t-esc="int(doc['Valor'])"/>
+                            </td>
+
+                        </tr>
+                        <!--<t t-set="total" t-value="doc['totalDeuda']"/>-->
+                    </t>
+                    Total:
+                    <!--<span><t t-esc="int(totalDeuda)" /></span>-->
+                </tbody>
+            </table>
+            <div class="row" align="right">
+                <!--<strong>Total:</strong> <span><strong> <t t-esc="int(totalDeuda)" /></strong></span>-->
+            </div>
+
+        </div>
+        <div class="footer">
+            <div class="row text-center" style="border-top: 1px solid black;">
+                <div class="col-xs-3 col-xs-offset-9 text-right">
+                    <ul class="list-inline" style="margin-top:10px;">
+                        <li>Page:</li>
+                        <li>
+                            <span class="page"/>
+                        </li>
+                        <li>/</li>
+                        <li>
+                            <span class="topage"/>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        </div>
+         <!--</t>-->
+    </template>
+
+
+  </data>
+</odoo>

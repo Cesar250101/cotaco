@@ -1,3 +1,3 @@
 # -*- coding: utf-8 -*-
 
-from . import models, nomina,compras,contabilidad,inventario,productos,ventas,produccion
+from . import models, nomina,compras,contabilidad,inventario,productos,ventas,produccion,reportes
