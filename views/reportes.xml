@@ -56,7 +56,7 @@
             menu="False"/>
 
     <template id="attendance_recap_report_view">
-<!--        <t t-call="web.external_layout">-->
+        <t t-call="web.external_layout">
         <div class="page" style="padding-top:55px;">
         <div class="header" style="border-bottom: 2px solid black">
             <h3 class="text-center">Reporte de Facturas Pendientes de Pago</h3>
@@ -135,7 +135,7 @@
         </div>
 
         </div>
-<!--         </t>-->
+         </t>
     </template>
 
 
