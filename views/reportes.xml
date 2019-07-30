@@ -14,6 +14,7 @@
                 </group>
                 <footer>
                     <button name="get_report" string="Obtener Reporte" type="object" class="oe_highlight"/>
+                    <button name="imprimir_excel" type="object" string="Excel"/>
                     <button string="Cancel" special="cancel"/>
                 </footer>
             </form>
@@ -70,10 +71,11 @@
             <table class="table table-condensed table-bordered" style="width: 100%">
                 <thead>
                     <th class="text-left" style="width: 10%">Chofer</th>
-                    <th class="text-center" style="width: 10%">Patente</th>
-                    <th class="text-right" style="width: 10%">NumeroPedido</th>
+                    <th class="text-center" style="width: 5%">Patente</th>
+                    <th class="text-right" style="width: 5%">NumeroPedido</th>
                     <th class="text-right" style="width: 10%">Fecha</th>
                     <th class="text-right" style="width: 50%">Detalle</th>
+                    <th class="text-right" style="width: 10%">Cantidad</th>
                     <th class="text-right" style="width: 10%">Valor</th>
 
                 </thead>
@@ -95,6 +97,10 @@
                             <td class="text-right">
                                 <span t-esc="doc['Detalle']"/>
                             </td>
+                            <td class="text-right">
+                                <span t-esc="int(doc['Cantidad'])"/>
+                            </td>
+
                             <td class="text-right">
                                 <span t-esc="int(doc['Valor'])"/>
                             </td>

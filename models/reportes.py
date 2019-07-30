@@ -4,6 +4,9 @@ from datetime import datetime, timedelta
 
 from odoo import models, fields, api
 from odoo.tools import DEFAULT_SERVER_DATE_FORMAT as DATE_FORMAT, DEFAULT_SERVER_DATETIME_FORMAT as DATETIME_FORMAT
+import logging
+
+_logger = logging.getLogger(__name__)
 
 
 class Conbranza(models.TransientModel):
@@ -12,6 +15,9 @@ class Conbranza(models.TransientModel):
     #cliente = fields.Many2one(comodel_name="res.partner", string="Cliente", required=True, )
     date_ini = fields.Date(string="Fecha Inicial", required=True, default=fields.Date.today)
     date_end = fields.Date(string="Fecha Final", required=True, default=fields.Date.today)
+    informe=fields.Selection([
+        (1,'Transportes Realizados'),
+        ], 'Tipo de informe', required=False)
 
     @api.multi
     def get_report(self):
@@ -30,7 +36,20 @@ class Conbranza(models.TransientModel):
 
         # use `module_name.report_id` as reference.
         # `report_action()` will call `get_report_values()` and pass `data` automatically.
+        informe=self.env.ref('cotaco.recap_report').report_action(self, data=data)
         return self.env.ref('cotaco.recap_report').report_action(self, data=data)
+    @api.multi
+    def imprimir_excel(self):
+        #r = requests.get('http://localhost:8069/web/binary/download_document?informe=%s&wizard=%s'%(self.informe,int(self.id)), auth=HTTPBasicAuth('admin', 'opendrive1885'))
+        #return r
+        _logger.info(self)
+        _logger.info(self.informe)
+        _logger.info(self.id)
+        return {
+            'type' : 'ir.actions.act_url',
+            'url': '/web/get_excel?informe=%s&wizard=%s'% (self.informe, self.id),
+            'target': 'self'
+        }
 
 class ReportAttendanceRecap(models.AbstractModel):
     """Abstract Model for report template.
@@ -64,6 +83,7 @@ class ReportAttendanceRecap(models.AbstractModel):
                 'Fecha':factura.confirmation_date,
                 'Saldo': factura.amount_total,
                 'Detalle': factura.order_line.name,
+                'Cantidad': factura.order_line.qty_invoiced,
                 'Valor': factura.order_line.price_subtotal,
             })
 
