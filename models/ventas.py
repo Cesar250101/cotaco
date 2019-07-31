@@ -21,13 +21,17 @@ class Cliente(models.Model):
     especificar_hes = fields.Boolean(string="Especificar HES")
     despacha_guia = fields.Boolean(string="Despachar con Guía?")
     obs_venta = fields.Char(string="Observación venta")
-    display_name=fields.Char(string="Nombre" ,compute='_Generar_Nombre', store=True)
+    #display_name=fields.Char(string="Nombre")
 
-    @api.one
-    @api.depends('name')
-    def _Generar_Nombre(self):
-        if self.document_number:
-            self.display_name=self.document_number + ' : ' + self.name
+
+
+    # @api.one
+    # @api.onchange('name')
+    # def _Generar_Nombre(self):
+    #     if self.document_number:
+    #         self.display_name=self.document_number + ' : ' + self.name
+    #     else:
+    #         self.display_name=self.name
 
 
 
@@ -80,7 +84,7 @@ class ExcepcionesVenta(models.Model):
 
     instrucciones_cliente = fields.Text(compute='_Instrucciones_Cliente')
     observaciones = fields.Char(string="Obs.Venta", related='partner_id.obs_venta')
-
+    partner_shipping_id=fields.Many2one(string="Dirección de Despacho",domain="[('partner_id','=',)]")
 
 
     @api.onchange('partner_id')
