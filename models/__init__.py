@@ -1,3 +1,3 @@
 # -*- coding: utf-8 -*-
 
-from . import models, nomina,orden_compra,contabilidad,inventario,productos,ventas,produccion,reportes
+from . import models, empleado,orden_compra,contabilidad,inventario,producto,produccion,reportes, cliente, comision, presupuesto

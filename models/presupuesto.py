@@ -1,39 +1,7 @@
 # -*- coding: utf-8 -*-
 
-from odoo.exceptions import ValidationError
 from odoo import models, fields, api
 from datetime import datetime, date, time, timedelta
-from odoo.exceptions import ValidationError
-import logging
-from odoo import exceptions
-from odoo.tools import DEFAULT_SERVER_DATE_FORMAT as DATE_FORMAT, DEFAULT_SERVER_DATETIME_FORMAT as DATETIME_FORMAT
-
-
-
-class Cliente(models.Model):
-    _inherit = 'res.partner'
-    #_rec_name = 'display_name'
-
-    hora_entrega=fields.Char(string="Horario de Entrega")
-    ficha_tecnica = fields.Boolean(string="Adjuntar Ficha Técnica")
-    hoja_seguridad = fields.Boolean(string="Adjuntar Hoja de Seguridad")
-    especificar_oc = fields.Boolean(string="Especificar Orden de Compra")
-    especificar_hes = fields.Boolean(string="Especificar HES")
-    despacha_guia = fields.Boolean(string="Despachar con Guía?")
-    obs_venta = fields.Char(string="Observación venta")
-    #display_name=fields.Char(string="Nombre")
-
-
-
-    # @api.one
-    # @api.onchange('name')
-    # def _Generar_Nombre(self):
-    #     if self.document_number:
-    #         self.display_name=self.document_number + ' : ' + self.name
-    #     else:
-    #         self.display_name=self.name
-
-
 
 
 class TransportesExternos(models.Model):
@@ -42,6 +10,7 @@ class TransportesExternos(models.Model):
 
     name = fields.Char(string='Transporte Externo')
     partner_id = fields.Many2one(comodel_name="res.partner", string="Proveedor", required=False, domain=[('supplier','=','true')] )
+
 
 
 class LineasPedidoVenta(models.Model):
@@ -166,23 +135,3 @@ class ExcepcionesVenta(models.Model):
         if dif != 0:
             return False
         return True
-
-class ComisionTramo(models.Model):
-    _name = "comision.tramo"
-
-    desde = fields.Float('UF > desde', required=True)
-    hasta = fields.Float('UF <= hasta', required=True)
-    comision = fields.Float('% comision', requiere=True)
-    descripcion = fields.Html(string="Descripción")
-
-
-class ComisionFactorizacion(models.Model):
-    _name = "comision.factorizacion"
-
-    descuento = fields.Float('Descuento', required=True)
-    factor = fields.Float('Factor', required=True)
-
-class ListaPrecios(models.Model):
-    _inherit = 'product.pricelist.item'
-
-    comision = fields.Integer(string='% Comisión', default=0)
