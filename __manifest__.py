@@ -34,7 +34,7 @@
         'views/productos.xml',
         'views/ventas.xml',
         'views/templates.xml',
-        'reports/banco_chile.xml',
+        #'reports/banco_chile.xml',
         'data/exception_rule_data.xml',
         'views/reportes.xml',
     ],

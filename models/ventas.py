@@ -12,7 +12,7 @@ from odoo.tools import DEFAULT_SERVER_DATE_FORMAT as DATE_FORMAT, DEFAULT_SERVER
 
 class Cliente(models.Model):
     _inherit = 'res.partner'
-    _rec_name = 'display_name'
+    #_rec_name = 'display_name'
 
     hora_entrega=fields.Char(string="Horario de Entrega")
     ficha_tecnica = fields.Boolean(string="Adjuntar Ficha Técnica")
@@ -84,7 +84,6 @@ class ExcepcionesVenta(models.Model):
 
     instrucciones_cliente = fields.Text(compute='_Instrucciones_Cliente')
     observaciones = fields.Char(string="Obs.Venta", related='partner_id.obs_venta')
-    partner_shipping_id=fields.Many2one(string="Dirección de Despacho",domain="[('partner_id','=',)]")
 
 
     @api.onchange('partner_id')
