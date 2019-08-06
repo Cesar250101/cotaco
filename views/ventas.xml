@@ -59,38 +59,14 @@
             </notebook>
             <xpath expr="//tree/field[@name='price_unit']" position="before">
                 <field name="item_precios"/>
+                <field name="user_id"/>
+                <field name="team_id"/>
             </xpath>
 
         </field>
     </record>
 
 
-<!--       Inherit Form View to Modify it-->
-      <record id="base.view_partner_form_cotaco" model="ir.ui.view">
-          <field name="name">base.view.partner.form.cotaco</field>
-          <field name="model">res.partner</field>
-          <field name="inherit_id" ref="base.view_partner_form"/>
-          <field name="arch" type="xml">
-              <notebook position="inside">
-                  <page string = "instrucciones Cliente">
-                      <group>
-                          <group>
-                              <field name="hora_entrega" />
-                              <field name="ficha_tecnica" />
-                              <field name="hoja_seguridad" />
-                              <field name="especificar_oc" />
-                              <field name="especificar_hes" />
-                              <field name="despacha_guia" />
-                          </group>
-                          <group>
-                              <field name="obs_venta"/>
-                          </group>
-                      </group>
-                  </page>
-              </notebook>
-
-          </field>
-      </record>
 
 
 

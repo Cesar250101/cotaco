@@ -1,0 +1,56 @@
+<odoo>
+  <data>
+
+
+    <!-- Inherit Form View to Modify it -->
+    <record id="base.view_res_partner_filter_cotaco" model="ir.ui.view">
+        <field name="name">base.view.res.partner.filter.cotaco</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_res_partner_filter"/>
+        <field name="arch" type="xml">
+            <xpath expr="//filter[@name='type_company']" position="after">
+                <filter string="Direcciones de Despacho" name="type_despacho" domain="[('type','=','delivery')]"/>
+            </xpath>
+        </field>
+    </record>
+
+<!--       Inherit Form View to Modify it-->
+      <record id="base.view_partner_form_cotaco" model="ir.ui.view">
+          <field name="name">base.view.partner.form.cotaco</field>
+          <field name="model">res.partner</field>
+          <field name="inherit_id" ref="base.view_partner_form"/>
+          <field name="arch" type="xml">
+              <notebook position="inside">
+                  <page string = "instrucciones Cliente">
+                      <group>
+                          <group>
+                              <field name="hora_entrega" />
+                              <field name="ficha_tecnica" />
+                              <field name="hoja_seguridad" />
+                              <field name="especificar_oc" />
+                              <field name="especificar_hes" />
+                              <field name="despacha_guia" />
+                          </group>
+                          <group>
+                              <field name="obs_venta"/>
+                          </group>
+                      </group>
+                  </page>
+              </notebook>
+              <field name="user_id" position="after">
+                  <field name="user_id_ti" attrs="{'invisible':[('type','!=','delivery')]}" />
+              </field>
+
+              <field name="user_id" position="attributes">
+                    <attribute name="string">Vendedor TA</attribute>
+                    <attribute name="attrs">{'invisible': [('type', '!=', 'delivery')]}</attribute>
+              </field>
+
+
+
+          </field>
+      </record>
+
+
+  </data>
+</odoo>

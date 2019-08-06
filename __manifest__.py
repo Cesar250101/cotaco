@@ -37,6 +37,8 @@
         #'reports/banco_chile.xml',
         'data/exception_rule_data.xml',
         'views/reportes.xml',
+        'views/clientes.xml',
+
     ],
     # only loaded in demonstration mode
     'demo': [

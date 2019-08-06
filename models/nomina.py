@@ -1,27 +1,20 @@
 # -*- coding: utf-8 -*-
 
+from odoo.exceptions import ValidationError
 from odoo import models, fields, api
 from datetime import datetime, date, time, timedelta
+from odoo.exceptions import ValidationError
+import logging
+from odoo import exceptions
+from odoo.tools import DEFAULT_SERVER_DATE_FORMAT as DATE_FORMAT, DEFAULT_SERVER_DATETIME_FORMAT as DATETIME_FORMAT
+
+class cotaco(models.Model):
+    _inherit = 'hr.contract'
+
+    trabajo_pesado=fields.Boolean(string='Trabajo Pesado?')
 
 
-class ComisionTramo(models.Model):
-    _name = "comision.tramo"
-
-    desde = fields.Float('UF > desde', required=True)
-    hasta = fields.Float('UF <= hasta', required=True)
-    comision = fields.Float('% comision', requiere=True)
-    descripcion = fields.Html(string="Descripción")
-
-
-class ComisionFactorizacion(models.Model):
-    _name = "comision.factorizacion"
-
-    descuento = fields.Float('Descuento', required=True)
-    factor = fields.Float('Factor', required=True)
-
-
-
-class ComisionesAntiguos(models.Model):
+class ComisionesCotaco(models.Model):
     _inherit = 'hr.payslip'
 
     @api.one

@@ -1,7 +1,33 @@
 # -*- coding: utf-8 -*-
 
+from odoo.exceptions import ValidationError
 from odoo import models, fields, api
 from datetime import datetime, date, time, timedelta
+from odoo.exceptions import ValidationError
+import logging
+from odoo import exceptions
+from odoo.tools import DEFAULT_SERVER_DATE_FORMAT as DATE_FORMAT, DEFAULT_SERVER_DATETIME_FORMAT as DATETIME_FORMAT
+
+
+class Cliente(models.Model):
+    _inherit = 'res.partner'
+    _rec_name = 'display_name'
+
+    hora_entrega=fields.Char(string="Horario de Entrega")
+    ficha_tecnica = fields.Boolean(string="Adjuntar Ficha Técnica")
+    hoja_seguridad = fields.Boolean(string="Adjuntar Hoja de Seguridad")
+    especificar_oc = fields.Boolean(string="Especificar Orden de Compra")
+    especificar_hes = fields.Boolean(string="Especificar HES")
+    despacha_guia = fields.Boolean(string="Despachar con Guía?")
+    obs_venta = fields.Char(string="Observación venta")
+    display_name=fields.Char(string="Nombre" ,compute='_Generar_Nombre', store=True)
+
+    @api.one
+    @api.depends('name')
+    def _Generar_Nombre(self):
+        self.display_name=self.document_number + ' : ' + self.name
+
+
 
 
 class TransportesExternos(models.Model):
@@ -12,15 +38,11 @@ class TransportesExternos(models.Model):
     partner_id = fields.Many2one(comodel_name="res.partner", string="Proveedor", required=False, domain=[('supplier','=','true')] )
 
 
-
 class LineasPedidoVenta(models.Model):
     _inherit = 'sale.order.line'
 
     item_precios = fields.Char(string='Precios', compute='_Obtener_Precios')
-    user_id = fields.Many2one(comodel_name="res.users", string="Vendedor", required=False, )
-    team_id = fields.Many2one(comodel_name="crm.team", string="Canal", required=False, )
-
-
+    #item_precios = fields.Selection(selection='_Obtener_Precios', string='Precios')
 
     @api.one
     @api.depends('product_id')
@@ -57,8 +79,6 @@ class ExcepcionesVenta(models.Model):
     instrucciones_cliente = fields.Text(compute='_Instrucciones_Cliente')
     observaciones = fields.Char(string="Obs.Venta", related='partner_id.obs_venta')
 
-
-    @api.onchange('partner_id')
     def _Instrucciones_Cliente(self):
         self.instrucciones_cliente = " "
 
@@ -138,3 +158,23 @@ class ExcepcionesVenta(models.Model):
         if dif != 0:
             return False
         return True
+
+class ComisionTramo(models.Model):
+    _name = "comision.tramo"
+
+    desde = fields.Float('UF > desde', required=True)
+    hasta = fields.Float('UF <= hasta', required=True)
+    comision = fields.Float('% comision', requiere=True)
+    descripcion = fields.Html(string="Descripción")
+
+
+class ComisionFactorizacion(models.Model):
+    _name = "comision.factorizacion"
+
+    descuento = fields.Float('Descuento', required=True)
+    factor = fields.Float('Factor', required=True)
+
+class ListaPrecios(models.Model):
+    _inherit = 'product.pricelist.item'
+
+    comision = fields.Integer(string='% Comisión', default=0)
