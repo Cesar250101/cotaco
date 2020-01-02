@@ -27,6 +27,7 @@
                     <field name="instrucciones_cliente" />
                 </div>
             </xpath>
+
             <notebook position="inside">
                 <page string = "Instrucciones Cliente">
                     <group>
@@ -39,6 +40,7 @@
                             <field name="horario_cliente" />
                             <field name="ficha_tecnica" />
                             <field name="hoja_seguridad" />
+                            <!--<field name="certificado_calidad" />-->
                             <field name="especificar_oc" />
                             <field name="especificar_hes" />
                             <field name="despacha_guia" />
@@ -46,10 +48,11 @@
                         </group>
                     </group>
                 </page>
-                <page string = "Despacho por Cuenta de Cotaco">
+                <page string = "Despacho Externo">
                     <group>
                         <group>
                             <field name="despacho_cotaco" />
+                            <field name="paga_cliente" />
                             <field name="transporte" attrs="{'invisible': [('despacho_cotaco', '=', False)]}"/>
                             <field name="valor_transporte" attrs="{'invisible': [('despacho_cotaco', '=', False)]}"/>
                         </group>
@@ -58,18 +61,30 @@
 
             </notebook>
             <xpath expr="//tree/field[@name='price_unit']" position="before">
-                <field name="item_precios"/>
+<!--                <field name="item_precios"/>-->
+                <button name="action_show_details" string="" type="object" icon="fa-list"/>
                 <field name="user_id"/>
-                <field name="team_id"/>
             </xpath>
 
         </field>
     </record>
 
 
-
-
-
+    <record id="cotaco.view_historial_venta_cliente" model="ir.ui.view">
+        <field name="name">cotaco.view.historial.venta.cliente</field>
+        <field name="model">sale.order.line</field>
+        <field name="arch" type="xml">
+            <form string="Historial Ventas Clientes">
+                <sheet>
+                    <group>
+                        <field name="product_id" readonly="True"/>
+                        <field name="ultima_venta" readonly="True"/>
+                        <field name="ultimo_precio" readonly="True"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
 
     <record id="product.product_pricelist_item_form_view_cotaco" model="ir.ui.view">
         <field name="name">product.product.pricelist.item.form.view.cotaco</field>

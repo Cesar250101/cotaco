@@ -1,6 +1,21 @@
 <odoo>
   <data>
 
+      
+      <!-- Inherit Form View to Modify it -->
+      <record id="product.product_uom_form_view_cotaco" model="ir.ui.view">
+          <field name="name">product.product.uom.form.view.cotaco</field>
+          <field name="model">product.uom</field>
+          <field name="inherit_id" ref="product.product_uom_form_view"/>
+          <field name="arch" type="xml">
+              
+              <xpath expr="//field[@name='name']" position="after">
+                  <field name="name_mostrado"/>
+              </xpath>
+              
+          </field>
+      </record>
+      
  <record id="stock.view_template_property_form_cotaco" model="ir.ui.view">
         <field name="name">stock.view.template.property.form.cotaco</field>
         <field name="model">product.template</field>
@@ -11,6 +26,9 @@
                     <field name="densidad" />
                     <field name="clase" />
                     <field name="nu" />
+                    <field name="product_doc_id" />
+                    <field name="product_doc_seguridad" />
+                    <field name="product_doc_calidad" />
                 </group>
             </xpath>
         </field>
@@ -23,6 +41,14 @@
       <field name="arch" type="xml">
           <xpath expr="//page[@name='notes']" position="after">
                 <page name="estiqueta" string="Etiqueta">
+                    <group>
+                        <group>
+                            <field name="nro_rombo_salud"/>
+                            <field name="nro_rombo_inflamable"/>
+                            <field name="nro_rombo_reactividad"/>
+                            <field name="nro_rombo_caract_especial"/>
+                        </group>
+                    </group>
                     <group>
                         <group>
                             <field name="uso_texto"/>
@@ -82,6 +108,45 @@
           </tree>
         </field>
     </record>
+
+<record id="cotaco_documentacion_producto_tree" model="ir.ui.view">
+    <field name="name">cotaco.documentacion.producto.tree</field>
+    <field name="model">cotaco.doc</field>
+    <field name="arch" type="xml">
+        <tree string="">
+            <field name="txt_filename"/>
+            <field name="txt_binary"/>
+            <field name="product_id" widget="many2many_tags"/>
+        </tree>
+    </field>
+</record>
+
+    <record id="cotaco_documentacion_producto" model="ir.ui.view">
+        <field name="name">cotaco.documentacion.producto</field>
+        <field name="model">cotaco.doc</field>
+        <field name="arch" type="xml">
+            <form string="">
+                <sheet>
+                    <group>
+                        <field name="txt_filename"/>
+                        <field name="txt_binary" filename="txt_filename"/>
+                        <field name="product_id" widget="many2many_tags"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+
+
+    <record model="ir.actions.act_window" id="action_doc">
+        <field name="name">Documentación</field>
+        <field name="res_model">cotaco.doc</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem id="menu_product_doc" parent="stock.menu_stock_inventory_control" name="Documentación Productos" sequence="12"
+          action="action_doc"/>
 
 
     <record model="ir.actions.act_window" id="action_nu">

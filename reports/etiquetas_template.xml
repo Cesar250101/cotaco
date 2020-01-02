@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="report_etiqueta_grande">
+        <t t-name="cotaco.report_etiqueta_grande">
+                <!--<t t-call="web.external_layout">-->
+                <t t-call="web.basic_layout">
+                <t t-call="web.html_container">
+                    <t t-foreach="docs" t-as="o">
+                            <div class="page">
+                                <div class="row">
+                                        <p><h3 align="center" t-field="o.product_id.name"></h3></p>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-4">
+                                        <p t-field="o.product_id.uso_texto"></p>
+                                        <br></br>
+                                        <p t-field="o.product_id.almacen_texto"></p>
+                                        <br></br>
+                                        <p t-field="o.product_id.precaucion_texto"></p>
+                                        <br></br>
+                                        <p t-field="o.product_id.composicion_texto"></p>
+                                    </div>
+                                    <div class="col-xs-4">
+                                        <p t-field="o.product_id.primeros_auxilios_texto"></p>
+                                    </div>
+                                    <div class="col-xs-4">
+                                        <br></br>
+                                        <br></br>
+                                        <table>
+                                            <tr></tr>
+                                          <tr>
+                                            <td><strong>N.U. :</strong></td>
+                                            <td><strong><p t-field="o.product_id.nu"></p></strong></td>
+                                          </tr>
+                                            <tr></tr>
+                                          <tr>
+                                            <td><strong>Clase :</strong></td>
+                                            <td><strong><p t-field="o.product_id.clase"></p></strong></td>
+                                          </tr>
+                                            <tr></tr>
+                                          <tr>
+                                            <td><strong>Registro ISP :</strong></td>
+                                            <td><strong><p t-field="o.product_id.registro_isp"></p></strong></td>
+                                          </tr>
+                                            <tr></tr>
+                                          <tr>
+                                            <td><strong>Lote de Producción :</strong></td>
+                                            <td><strong><p t-field="o.name"></p></strong></td>
+                                          </tr>
+                                            <tr></tr>
+                                            <tr>
+                                            <td><strong>Fecha de Elaboración :</strong></td>
+                                            <td><strong><p t-field="o.create_date"></p></strong></td>
+                                          </tr>
+                                            <tr></tr>
+                                          <tr>
+                                            <td><strong>Fecha de Vencimiento :</strong></td>
+                                            <td><strong><p t-field="o.life_date"></p></strong></td>
+                                          </tr>
+
+                                        </table>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-4"></div>
+                                    <div class="col-xs-4"></div>
+                                    <div class="col-xs-4" align="center">
+                                        <span t-field="o.product_id.nro_rombo_inflamable"></span><br></br>
+                                        <span t-field="o.product_id.nro_rombo_salud"></span><span>    </span>
+                                        <span t-field="o.product_id.nro_rombo_reactividad"></span><br></br>
+                                        <span t-field="o.product_id.nro_rombo_caract_especial"></span>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </t>
+                     </t>
+                 </t>
+        </t>
+    </template>
+
+</odoo>

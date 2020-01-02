@@ -15,6 +15,57 @@ class SeguimientoDespacho(models.Model):
 
     status_despacho_id = fields.Many2one(comodel_name="cotaco.status.despacho", string="Status de Despacho", required=False, )
     observacion = fields.Char(string="Observación", required=False, )
+    horario_cliente = fields.Char(string="Horario de Entrega", compute='_ObtieneDatosSO')
+    ficha_tecnica = fields.Boolean(string="Ficha Técnica", compute='_ObtieneDatosSO')
+    hoja_seguridad = fields.Boolean(string="Hoja de Seguridad", compute='_ObtieneDatosSO')
+    #certificado_calidad = fields.Boolean(string="Certificado de Calidad", related='partner_id.certificado_calidad')
+    especificar_oc = fields.Boolean(string="Especificar OC", compute='_ObtieneDatosSO')
+    especificar_hes = fields.Boolean(string="Especificar HES", compute='_ObtieneDatosSO')
+    despacha_guia = fields.Boolean(string="Despachar con Guía", compute='_ObtieneDatosSO')
+    instrucciones_cliente = fields.Text(compute='_Instrucciones_Cliente')
+    observaciones = fields.Char(string="Obs.Venta", related='partner_id.obs_venta')
+
+    @api.depends('partner_id')
+    def _Instrucciones_Cliente(self):
+        self.instrucciones_cliente = " "
+
+        if(self.observaciones):
+            self.instrucciones_cliente += "Obs." + self.observaciones + "\n\n"
+
+        if (self.horario_cliente):
+            self.instrucciones_cliente += "-> Horario : " + self.horario_cliente
+
+        if (self.ficha_tecnica):
+            self.instrucciones_cliente += "-> Ficha técnica "
+
+        if(self.hoja_seguridad):
+            self.instrucciones_cliente += "-> Hoja de seguridad "
+
+        if(self.especificar_oc):
+            self.instrucciones_cliente += "-> Especificar OC "
+
+        if(self.especificar_hes):
+            self.instrucciones_cliente += "-> Especificar HES "
+
+        if(self.despacha_guia):
+            self.instrucciones_cliente += "-> Despacho con guía "
+
+
+    @api.one
+    @api.depends('origin')
+    def _ObtieneDatosSO(self):
+        domain = [
+            ('name', '=', self.origin)
+        ]
+        so=self.env['sale.order'].search(domain)
+        for i in so:
+            self.horario_cliente=i.horario_cliente
+            self.ficha_tecnica=i.ficha_tecnica
+            self.hoja_seguridad=i.ficha_tecnica
+            self.especificar_oc=i.especificar_oc
+            self.especificar_hes=i.especificar_hes
+            self.despacha_guia=i.despacha_guia
+
 
 
 class StatusDespacho(models.Model):

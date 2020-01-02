@@ -20,6 +20,14 @@
         <field name="model">stock.picking</field>
         <field name="inherit_id" ref="stock.view_picking_form"/>
         <field name="arch" type="xml">
+            <xpath expr="//notebook" position="before">
+                <div class="alert alert-info" role="alert" style="margin-bottom:0px" attrs="{'invisible': [('instrucciones_cliente', '=', ' ')]}">
+                    <div align="center">
+                        <strong>Instrucciones del cliente </strong>
+                    </div>
+                    <field name="instrucciones_cliente" />
+                </div>
+            </xpath>
             <notebook position="inside">
                 <page string = "Seguimiento de Despacho" attrs="{'invisible': [('picking_type_id', '!=', 2)]}">
                     <group>

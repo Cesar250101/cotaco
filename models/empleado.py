@@ -8,4 +8,3 @@ class empleado(models.Model):
     trabajo_pesado=fields.Boolean(string='Trabajo Pesado?')
 
 
-

@@ -13,3 +13,9 @@ class OrdenCompra(models.Model):
     _inherit = 'purchase.order'
 
     cuentas_analiticas = fields.Many2one(string='Cuentas Analiticas', related='order_line.account_analytic_id')
+
+
+
+class OrdenCompraLionea(models.Model):
+    _inherit = 'purchase.order.line'
+

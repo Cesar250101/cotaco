@@ -19,11 +19,19 @@ class CuentaExcepcionVenta (models.Model):
     valida_excepcion = fields.Boolean(string='Valida Excepción Venta')
     es_fondo_rendir = fields.Boolean(string='Es para fondos x Rendir')
 
+class PeriodoLibro(models.Model):
+    _name = 'cotaco.periodo.libro'
+    _rec_name = 'name'
+    _description = 'Periodos en facturas para la emisión del los libros de compra y venta'
+
+    name = fields.Char(string="Periodo Libro")
+    active = fields.Boolean(string="Activo?",  )
+
 
 class Facturas(models.Model):
     _inherit = 'account.invoice'
 
-    periodo = fields.Char(String='Periodo del Libro')
+    periodo_libro = fields.Many2one(comodel_name="cotaco.periodo.libro", string="Periodo del Libro", required=False, )
     valor_flete = fields.Integer(string="Valor Flete")
 
 

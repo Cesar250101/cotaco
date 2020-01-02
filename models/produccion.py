@@ -12,9 +12,21 @@ from odoo.tools import DEFAULT_SERVER_DATE_FORMAT as DATE_FORMAT, DEFAULT_SERVER
 class ListaMateriales(models.Model):
     _inherit = 'mrp.bom.line'
 
-    densidad = fields.Float(string="Densidad", related="product_id.densidad" ,required=False, )
-    qty_kilos = fields.Float(string="Cantidad Kilos",  required=False, )
+    densidad = fields.Float(string="Densidad", related="product_id.densidad" ,required=False, readonly=True )
+    #qty_kilos = fields.Float(string="Cantidad Kilos",  required=False, )
 
-    @api.onchange('qty_kilos')
-    def _onchange_qty_kilos(self):
-        self.product_qty=self.densidad*self.qty_kilos
+    #@api.onchange('qty_kilos')
+    #def _onchange_qty_kilos(self):
+    #    self.product_qty=self.densidad*self.qty_kilos
+
+
+class Produccion(models.Model):
+    _inherit = 'mrp.workorder'
+
+    @api.model
+    def record_production(self):
+        res = super(Produccion, self).record_production()
+        nrolote=self.env['stock.production.lot'].search([])[-1].name
+        nrolote+=1
+        for i in nrolote:
+            self.final_lot_id=nrolote

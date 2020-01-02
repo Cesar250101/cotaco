@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="formato_general" model="report.paperformat">
+		    <field name="name">General</field>
+		    <field name="default" eval="True"/>
+		    <field name="format">custom</field>
+			<field name="page_height">216</field>
+        	<field name="page_width">276</field>
+        	<field name="orientation">Portrait</field>
+		    <field name="margin_top">10</field>
+		    <field name="margin_bottom">10</field>
+		    <field name="margin_left">10</field>
+		    <field name="margin_right">10</field>
+		    <field name="header_spacing">20</field>
+		</record>
+
+       	<report
+       		id="Etiqueta_Autoadhesiva_grande"
+       		string="Etiqueta Autoadhesiva 27,6 X 21,6"
+       		model="stock.production.lot"
+       		report_type="qweb-html"
+       		name="cotaco.report_etiqueta_grande"
+            file="cotaco.report_etiqueta_grande"
+            paperformat="formato_general"/>
+
+    </data>
+</odoo>

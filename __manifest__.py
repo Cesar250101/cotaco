@@ -20,7 +20,7 @@
     'version': '0.1',
 
     # any module necessary for this one to work correctly
-    'depends': ['base','account','sale_exception','stock','mrp','crm'],
+    'depends': ['base','account','sale_exception','stock','mrp','crm','hr'],
 
     # always loaded
     'data': [
@@ -34,11 +34,13 @@
         'views/productos.xml',
         'views/ventas.xml',
         'views/templates.xml',
-        #'reports/banco_chile.xml',
+        'views/empleados.xml',
         'data/exception_rule_data.xml',
         'views/reportes.xml',
         'views/clientes.xml',
-
+        'views/users.xml',
+        'reports/etiquetas.xml',
+        'reports/etiquetas_template.xml',
     ],
     # only loaded in demonstration mode
     'demo': [

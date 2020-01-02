@@ -27,6 +27,8 @@
                               <field name="hora_entrega" />
                               <field name="ficha_tecnica" />
                               <field name="hoja_seguridad" />
+                              <!--<field name="certificado_calidad" />-->
+
                               <field name="especificar_oc" />
                               <field name="especificar_hes" />
                               <field name="despacha_guia" />
@@ -38,9 +40,11 @@
                   </page>
               </notebook>
               <field name="user_id" position="after">
-                  <field name="user_id_ti" attrs="{'invisible':[('type','!=','delivery')]}" />
+                  <field name="user_id_ti" attrs="{'invisible':[('type','!=','delivery')]}" groups="sales_team.group_sale_manager" />
               </field>
-
+              <field name="user_id" position="attributes">
+                  <attribute name="groups">sales_team.group_sale_manager</attribute>
+              </field>
               <field name="user_id" position="attributes">
                     <attribute name="string">Vendedor TA</attribute>
                     <attribute name="attrs">{'invisible': [('type', '!=', 'delivery')]}</attribute>

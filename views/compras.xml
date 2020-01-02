@@ -13,7 +13,21 @@
             </field>
     </field>
     </record>
-
+      
+      
+      <!-- Inherit Form View to Modify it -->
+<!--      <record id="purchase.purchase_order_form_cotaco_1" model="ir.ui.view">
+          <field name="name">purchase.purchase.order.form.cotaco_1</field>
+          <field name="model">purchase.order.line</field>
+          <field name="inherit_id" ref="purchase.purchase_order_form"/>
+          <field name="arch" type="xml">
+              
+              <xpath expr="//tree/field[@name='product_qty']" position="after">
+                  <field name="cantidad_litros" attrs="{'invisible':[('cantidad_litros','!=',0)]}"/>
+              </xpath>
+              
+          </field>
+      </record>-->
 
   </data>
 </odoo>
