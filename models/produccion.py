@@ -30,3 +30,10 @@ class Produccion(models.Model):
         nrolote+=1
         for i in nrolote:
             self.final_lot_id=nrolote
+
+class NewModule(models.Model):
+    _inherit = 'mrp.bom'
+
+    nro_formula = fields.Char(string='Nro. Formula')
+    version_formula = fields.Char(string='Versión Formula')
+

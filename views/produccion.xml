@@ -1,17 +1,23 @@
 <odoo>
   <data>
+    <!-- Inherit Form View to Modify it -->
+    <record id="mrp_bom_form_view_method" model="ir.ui.view">
+        <field name="name">mrp_bom_form_view_method</field>
+        <field name="model">mrp.bom</field>
+        <field name="inherit_id" ref="mrp_bom_form_view"/>
+        <field name="arch" type="xml">
 
+            <xpath expr="//field[@name='type']" position="">
+                <field name="nro_formula"/>
+                <field name="version_formula"/>
+            </xpath>
+            <xpath expr="/tree/field[@name='product_id']" position="">
+                <field name="product_id.product_tmpl_id.descrption"/>
+                <field name="version_formula"/>
+            </xpath>
 
-<!--      <record id="cotaco.mrp_bom_form_view" model="ir.ui.view">-->
-<!--        <field name="name">cotaco.mrp.bom.form.view</field>-->
-<!--        <field name="model">mrp.bom.line</field>-->
-<!--        <field name="inherit_id" ref="mrp.mrp_bom_form_view"/>-->
-<!--        <field name="arch" type="xml">-->
-<!--            <xpath expr="//tree/field[@name='operation_id']" position="after">-->
-<!--                <field name="densidad" />-->
-<!--            </xpath>-->
-<!--        </field>-->
-<!--    </record>-->
+        </field>
+    </record>
 
   </data>
 </odoo>
