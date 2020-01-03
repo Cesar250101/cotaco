@@ -13,6 +13,9 @@ class ListaMateriales(models.Model):
     _inherit = 'mrp.bom.line'
 
     densidad = fields.Float(string="Densidad", related="product_id.densidad" ,required=False, readonly=True )
+    codigo_mp = fields.Text(string='Código Materia Prima',
+                                   store=True,
+                                   related='product_id.product_tmpl_id.description')
     #qty_kilos = fields.Float(string="Cantidad Kilos",  required=False, )
 
     #@api.onchange('qty_kilos')
