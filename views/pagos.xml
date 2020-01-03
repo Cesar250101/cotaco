@@ -1,15 +1,15 @@
 <odoo>
   <data>
     <!-- Inherit Form View to Modify it -->
-    <record id="account_payment_order_form_method" model="ir.ui.view">
-        <field name="name">account.payment.order.form.method</field>
-        <field name="model">account.payment.order</field>
-        <field name="inherit_id" ref="account_payment_order.account_payment_order_form"/>
-        <field name="arch" type="xml">
-            <xpath expr="//field[@name='generate_user_id']" position="after">
-                <field string="Cobrador" name="cobrador"/>
-            </xpath>
-        </field>
-    </record>
+<!--    <record id="account_payment_order_form_method" model="ir.ui.view">-->
+<!--        <field name="name">account.payment.order.form.method</field>-->
+<!--        <field name="model">account.payment.order</field>-->
+<!--        <field name="inherit_id" ref="account_payment_order.account_payment_order_form"/>-->
+<!--        <field name="arch" type="xml">-->
+<!--            <xpath expr="//field[@name='generate_user_id']" position="after">-->
+<!--                <field string="Cobrador" name="cobrador"/>-->
+<!--            </xpath>-->
+<!--        </field>-->
+<!--    </record>-->
   </data>
 </odoo>
