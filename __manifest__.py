@@ -39,6 +39,7 @@
         'views/reportes.xml',
         'views/clientes.xml',
         'views/users.xml',
+        'views/pagos.xml',
         'reports/etiquetas.xml',
         'reports/etiquetas_template.xml',
     ],

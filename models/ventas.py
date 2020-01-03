@@ -51,23 +51,23 @@ class LineasPedidoVenta(models.Model):
 
 
 
-    @api.one
-    @api.constrains('price_unit')
-    def check_costo_precio(self):
-        self.ensure_one()
-        # por compatibilidad con el modulo de sale_order_type_invoice_policy
-        #if self._context.get('by_pass_credit_limit', False):
-        #    return True
-        product_id=self.product_id.product_tmpl_id.id
-        domain = [
-            ('product_tmpl_id', '=', product_id),
-            ('pricelist_id', '=', 1)
-        ]
-        precio_uno = self.env['product.pricelist_item'].search(domain,limit=1).fixed_price
-        precio_uno=precio_uno*0,8
-
-        if self.price_unit < precio_uno:
-            raise ValidationError("Precio no puede ser menor al precio de venta mas bajo de la lista 1 (precio-20%)")
+    # @api.one
+    # @api.constrains('price_unit')
+    # def check_costo_precio(self):
+    #     self.ensure_one()
+    #     # por compatibilidad con el modulo de sale_order_type_invoice_policy
+    #     #if self._context.get('by_pass_credit_limit', False):
+    #     #    return True
+    #     product_id=self.product_id.product_tmpl_id.id
+    #     domain = [
+    #         ('product_tmpl_id', '=', product_id),
+    #         ('pricelist_id', '=', 1)
+    #     ]
+    #     precio_uno = self.env['product.pricelist_item'].search(domain,limit=1).fixed_price
+    #     precio_uno=precio_uno*0,8
+    #
+    #     if self.price_unit < precio_uno:
+    #         raise ValidationError("Precio no puede ser menor al precio de venta mas bajo de la lista 1 (precio-20%)")
 
     def action_show_details(self):
         self.ensure_one()
