@@ -20,12 +20,12 @@
     'version': '0.1',
 
     # any module necessary for this one to work correctly
-    'depends': ['base','account','sale_exception','stock','mrp','crm','hr'],
+    'depends': ['base','account','sale_exception','stock','mrp','crm','hr','mrp_repair'],
 
     # always loaded
     'data': [
         # 'security/ir.model.access.csv',
-        #'views/views.xml',
+        'views/armado.xml',
         'views/compras.xml',
         'views/produccion.xml',
         'views/contabilidad.xml',
