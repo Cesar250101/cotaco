@@ -50,7 +50,7 @@
                             <field name="despacho_cotaco" sting="Transporte Externo" />
                             <field name="transporte" attrs="{'invisible': [('despacho_cotaco', '=', False)]}"/>
                             <field name="valor_transporte" attrs="{'invisible': [('despacho_cotaco', '=', False)]}"/>
-                            <field name="Flete por Pagar" attrs="{'invisible': [('despacho_cotaco', '=', False)]}"/>
+                            <field name="paga_cliente" string="Flete por Pagar" attrs="{'invisible': [('despacho_cotaco', '=', False)]}"/>
                             <field name="despacho_representante" />
                         </group>
                         <group>
