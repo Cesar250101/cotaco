@@ -52,7 +52,6 @@
                             <field name="valor_transporte" attrs="{'invisible': [('despacho_cotaco', '=', False)]}"/>
                             <field name="paga_cliente" />
                             <field name="despacho_representante" />
-                            <field name="retira_cliente" />
                         </group>
                         <group>
                             <field name="recibe_cliente" />
