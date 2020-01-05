@@ -24,6 +24,7 @@ class SeguimientoDespacho(models.Model):
     despacha_guia = fields.Boolean(string="Despachar con Guía", compute='_ObtieneDatosSO')
     instrucciones_cliente = fields.Text(compute='_Instrucciones_Cliente')
     observaciones = fields.Char(string="Obs.Venta", related='partner_id.obs_venta')
+    codigo_mp = fields.Char(string="Materia Prima", related='product_id.product_tmpl_id.description')
 
     @api.depends('partner_id')
     def _Instrucciones_Cliente(self):
