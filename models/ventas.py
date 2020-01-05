@@ -23,6 +23,7 @@ class Cliente(models.Model):
     obs_venta = fields.Char(string="Observación venta")
 
 
+
 class TransportesExternos(models.Model):
     _name = 'cotaco.transportes'
     _description = 'Transportes Externos'
@@ -166,6 +167,7 @@ class ExcepcionesVenta(models.Model):
 
     instrucciones_cliente = fields.Text(compute='_Instrucciones_Cliente')
     observaciones = fields.Char(string="Obs.Venta", related='partner_id.obs_venta')
+    recibe_cliente = fields.Char(string="Quien Recibe?")
 
     @api.one
     @api.constrains('es_muestra')

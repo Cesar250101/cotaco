@@ -55,7 +55,7 @@
                         </group>
                         <group>
                             <field name="recibe_cliente" />
-                            <field name="horario_cliente" />
+                            <field name="hora_entrega" />
                         </group>
 
                     </group>
