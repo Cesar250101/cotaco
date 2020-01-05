@@ -21,7 +21,7 @@ class Cliente(models.Model):
     especificar_hes = fields.Boolean(string="Especificar HES")
     despacha_guia = fields.Boolean(string="Despachar con Guía?")
     obs_venta = fields.Char(string="Observación venta")
-    recibe_cliente = fields.Char(string="Quien Recibe?", required=False, )
+    recibe_cliente = fields.Char(string="Quien Recibe?")
 
 
 class TransportesExternos(models.Model):
