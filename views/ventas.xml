@@ -44,7 +44,6 @@
                             <field name="especificar_oc" />
                             <field name="especificar_hes" />
                             <field name="despacha_guia" />
-
                         </group>
                     </group>
                 </page>
@@ -54,10 +53,14 @@
                             <field name="despacho_cotaco" />
                             <field name="transporte" attrs="{'invisible': [('despacho_cotaco', '=', False)]}"/>
                             <field name="valor_transporte" attrs="{'invisible': [('despacho_cotaco', '=', False)]}"/>
+                            <field name="paga_cliente" />
                             <field name="despacho_representante" />
                             <field name="retira_cliente" />
-                            <field name="paga_cliente" />
                         </group>
+                        <group>
+                            <field name="recibe_cliente" />
+                        </group>
+
                     </group>
                 </page>
 

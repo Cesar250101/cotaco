@@ -21,15 +21,7 @@ class Cliente(models.Model):
     especificar_hes = fields.Boolean(string="Especificar HES")
     despacha_guia = fields.Boolean(string="Despachar con Guía?")
     obs_venta = fields.Char(string="Observación venta")
-    # display_name=fields.Char(string="Nombre" ,compute='_Generar_Nombre', store=True)
-    #
-    # @api.one
-    # @api.depends('name')
-    # def _Generar_Nombre(self):
-    #     if self.type=='contact':
-    #         self.display_name=self.document_number if self.document_number else '' + ' : ' + self.name if self.name else ''
-    #     else:
-    #         self.display_name=self.parent_id.name+", "+self.street
+    recibe_cliente = fields.Char(string="Recibe", required=False, )
 
 
 class TransportesExternos(models.Model):
