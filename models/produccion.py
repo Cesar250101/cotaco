@@ -40,7 +40,4 @@ class NewModule(models.Model):
     nro_formula = fields.Char(string='Nro. Formula')
     version_formula = fields.Char(string='Versión Formula')
 
-class NewModule(models.Model):
-    _inherit = 'mrp.production'
 
-    codigo_mp = fields.Text(string="Materia Prima", related='product_id.product_tmpl_id.description')

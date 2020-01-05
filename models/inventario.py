@@ -9,6 +9,11 @@ from odoo import exceptions
 from odoo.tools import DEFAULT_SERVER_DATE_FORMAT as DATE_FORMAT, DEFAULT_SERVER_DATETIME_FORMAT as DATETIME_FORMAT
 
 
+class NewModule(models.Model):
+    _inherit = 'stock.move'
+
+    codigo_mp = fields.Text(string="Materia Prima", related='product_id.product_tmpl_id.description')
+
 
 class SeguimientoDespacho(models.Model):
     _inherit = 'stock.picking'
