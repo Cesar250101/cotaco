@@ -1,0 +1,39 @@
+<odoo>
+  <data>
+    <!-- Inherit Form View to Modify it -->
+    <record id="qc_test_form_view_cotaco" model="ir.ui.view">
+        <field name="name">qc.test.form.view.cotaco</field>
+        <field name="model">qc.test</field>
+        <field name="inherit_id" ref="quality_control.qc_test_form_view"/>
+        <field name="arch" type="xml">
+                <field name="category" position="replace">
+                    <field name="nombre_completo"/>
+                </field>
+                <field name="active" position="after">
+                        <field name="dias_duracion_producto"/>
+                        <field name="nu"/>
+                        <field name="clase"/>
+                </field>
+                <field name="fill_correct_values" position="after">
+                        <field name="salud"/>
+                        <field name="inflamable"/>
+                        <field name="reactividad"/>
+                        <field name="especial"/>
+                </field>
+        </field>
+    </record>
+
+    <record id="qc_test_tree_view_cotaco" model="ir.ui.view">
+        <field name="name">qc_test_tree_view_cotaco</field>
+        <field name="model">qc.test</field>
+        <field name="inherit_id" ref="quality_control.qc_test_tree_view"/>
+        <field name="arch" type="xml">
+                <field name="category" position="replace">
+                    <field name="nombre_completo"/>
+                </field>
+        </field>
+    </record>
+
+
+  </data>
+</odoo>

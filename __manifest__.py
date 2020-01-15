@@ -20,7 +20,7 @@
     'version': '0.1',
 
     # any module necessary for this one to work correctly
-    'depends': ['base','account','sale_exception','stock','mrp','crm','hr','mrp_repair'],
+    'depends': ['base','account','sale_exception','stock','mrp','crm','hr','mrp_repair','quality_control'],
 
     # always loaded
     'data': [
@@ -40,6 +40,7 @@
         'views/clientes.xml',
         'views/users.xml',
         'views/pagos.xml',
+        'views/calidad.xml',
         'reports/etiquetas.xml',
         'reports/etiquetas_template.xml',
     ],
