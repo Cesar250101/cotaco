@@ -103,8 +103,8 @@ class LineasPedidoVenta(models.Model):
                     vendedor=self.env['res.partner'].search([('id','=',self.order_id.partner_shipping_id.id)],limit=1).user_id
                 if 'Indust' in d.complete_name:
                     vendedor=self.env['res.partner'].search([('id','=',self.order_id.partner_shipping_id.id)],limit=1).user_id_ti
-            if self.user_id!=vendedor:
-                raise ValidationError("Vendedor no corresponde a la sucursal o no pertenece a la categoría del producto!")
+            # if self.user_id!=vendedor:
+            #     raise ValidationError("Vendedor no corresponde a la sucursal o no pertenece a la categoría del producto!")
 
     @api.onchange('product_id')
     def _onchange(self):
