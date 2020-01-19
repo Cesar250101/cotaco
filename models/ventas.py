@@ -92,19 +92,19 @@ class LineasPedidoVenta(models.Model):
             'ultima_venta': ultima_venta,
         }
 
-    @api.one
-    @api.constrains('user_id')
-    def _check_vendedor(self):
-        vendedor=""
-        if self.order_id.partner_shipping_id and self.product_id:
-            division=self.env['product.category'].search([('id','=',self.product_id.categ_id.id)])
-            for d in division:
-                if 'Agua' in d.complete_name:
-                    vendedor=self.env['res.partner'].search([('id','=',self.order_id.partner_shipping_id.id)],limit=1).user_id
-                if 'Indust' in d.complete_name:
-                    vendedor=self.env['res.partner'].search([('id','=',self.order_id.partner_shipping_id.id)],limit=1).user_id_ti
-            # if self.user_id!=vendedor:
-            #     raise ValidationError("Vendedor no corresponde a la sucursal o no pertenece a la categoría del producto!")
+    # @api.one
+    # @api.constrains('user_id')
+    # def _check_vendedor(self):
+    #     vendedor=""
+    #     if self.order_id.partner_shipping_id and self.product_id:
+    #         if self.user_id=="":
+    #             raise ValidationError("Debe seleccionar un vendedor en cada línea de producto!")
+    #         division=self.env['product.category'].search([('id','=',self.product_id.categ_id.id)])
+    #         for d in division:
+    #             if 'Agua' in d.complete_name:
+    #                 vendedor=self.env['res.partner'].search([('id','=',self.order_id.partner_shipping_id.id)],limit=1).user_id
+    #             if 'Indust' in d.complete_name:
+    #                 vendedor=self.env['res.partner'].search([('id','=',self.order_id.partner_shipping_id.id)],limit=1).user_id_ti
 
     @api.onchange('product_id')
     def _onchange(self):

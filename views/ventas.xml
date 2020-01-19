@@ -64,7 +64,7 @@
             </notebook>
             <xpath expr="//tree/field[@name='price_unit']" position="before">
                 <button name="action_show_details" string="" type="object" icon="fa-list"/>
-                <field name="user_id"/>
+                <field name="user_id" required="True"/>
             </xpath>
         </field>
     </record>
