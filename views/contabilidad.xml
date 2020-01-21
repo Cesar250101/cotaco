@@ -36,31 +36,6 @@
         </field>
     </record>
 
-    <record id="cotaco.periodo_libro_cotaco" model="ir.ui.view">
-        <field name="name">cotaco.periodo.libro.cotaco</field>
-        <field name="model">cotaco.periodo.libro</field>
-        <field name="arch" type="xml">
-            <form string="Periodos para facturas de compra y venta">
-                <sheet>
-                    <group>
-                        <group>
-                            <field name="name"/>
-                            <field name="active"/>
-                        </group>
-                    </group>
-                </sheet>
-            </form>
-        </field>
-    </record>
-
-    <record model="ir.actions.act_window" id="action_periodos">
-        <field name="name">Periodos</field>
-        <field name="res_model">cotaco.periodo.libro</field>
-        <field name="view_mode">tree,form</field>
-    </record>
-    <menuitem id="menu_periodos" parent="account.account_account_menu" name="Periodos" sequence="10"
-              action="action_periodos"/>
-
     <!-- Inherit Form View to Modify it -->
     <record id="account.view_move_form_cotaco" model="ir.ui.view">
         <field name="name">account.view.move.form.cotaco</field>
@@ -75,19 +50,6 @@
 
         </field>
     </record>
-    <!-- Inherit Form View to Modify it -->
-    <record id="account.invoice_form_cotaco" model="ir.ui.view">
-        <field name="name">account.invoice.form.cotaco</field>
-        <field name="model">account.invoice</field>
-        <field name="inherit_id" ref="account.invoice_supplier_form"/>
-        <field name="arch" type="xml">
-            <xpath expr="//field[@name='date_invoice']" position="after">
-                <field name="periodo_libro" />
-            </xpath>
-
-        </field>
-    </record>
-
 
     <record id="account.view_account_form_cotaco" model="ir.ui.view">
       <field name="name">account.view.account.form.cotaco</field>

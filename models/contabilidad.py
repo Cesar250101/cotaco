@@ -19,35 +19,6 @@ class CuentaExcepcionVenta (models.Model):
     valida_excepcion = fields.Boolean(string='Valida Excepción Venta')
     es_fondo_rendir = fields.Boolean(string='Es para fondos x Rendir')
 
-class PeriodoLibro(models.Model):
-    _name = 'cotaco.periodo.libro'
-    _rec_name = 'name'
-    _description = 'Periodos en facturas para la emisión del los libros de compra y venta'
-
-    name = fields.Char(string="Periodo Libro")
-    active = fields.Boolean(string="Activo?",  )
-
-
-class Facturas(models.Model):
-    _inherit = 'account.invoice'
-
-    periodo_libro = fields.Many2one(comodel_name="cotaco.periodo.libro", string="Periodo del Libro", required=False, )
-    valor_flete = fields.Integer(string="Valor Flete")
-
-
-
-    @api.onchange('date_invoice')
-    def _obtener_periodo(self):
-        # fecha=str(self.date_invoice)
-        # objfecha = datetime.strptime(fecha,'%y-%m-%d')
-        # año=objfecha.year
-        # mes=objfecha.month
-        # strmes="00" + str(mes)
-        # strmes=strmes[-2:]
-        # periodo=str(año)+str(mes)
-        self.periodo="201906"
-
-
 
 class ComprobantesContables(models.Model):
     _inherit = 'account.move'
