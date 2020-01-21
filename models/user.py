@@ -7,3 +7,5 @@ class Usuarios(models.Model):
 
     aprueba_muestras = fields.Boolean(string="Aprueba Muestras")
 
+
+
