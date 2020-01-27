@@ -36,9 +36,6 @@
                     </group>
                 </group>
             </xpath>
-            <xpath expr="//field[@name='margin']" position="after">
-                <field name="costo_armado_rendicion" widget="Monetary"/>
-            </xpath>
             <notebook position="inside">
                 <page string = "Instrucciones Cliente">
                     <group>
