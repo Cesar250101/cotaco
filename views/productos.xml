@@ -1,7 +1,6 @@
 <odoo>
   <data>
 
-      
       <!-- Inherit Form View to Modify it -->
       <record id="product.product_uom_form_view_cotaco" model="ir.ui.view">
           <field name="name">product.product.uom.form.view.cotaco</field>
@@ -39,6 +38,9 @@
       <field name="model">product.template</field>
       <field name="inherit_id" ref="product.product_template_form_view"/>
       <field name="arch" type="xml">
+            <xpath expr="//field[@name='uom_po_id']" position="after">
+                <field name="comision_equipos"/>
+            </xpath>
           <xpath expr="//page[@name='notes']" position="after">
                 <page name="estiqueta" string="Etiqueta">
                     <group>
