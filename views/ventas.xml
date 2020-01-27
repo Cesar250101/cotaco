@@ -27,7 +27,18 @@
                     <field name="instrucciones_cliente" />
                 </div>
             </xpath>
-
+            <xpath expr="//group[@name='sale_total']" position="after">
+                <group string="Costo Armado">
+                    <group>
+                        <field name="tota_armado" widget="Monetary"/>
+                        <field name="total_rendiciones" widget="Monetary"/>
+                        <field name="costo_armado_rendicion" widget="Monetary"/>
+                    </group>
+                </group>
+            </xpath>
+            <xpath expr="//field[@name='margin']" position="after">
+                <field name="costo_armado_rendicion" widget="Monetary"/>
+            </xpath>
             <notebook position="inside">
                 <page string = "Instrucciones Cliente">
                     <group>
@@ -60,6 +71,17 @@
 
                     </group>
                 </page>
+                <page string = "Armados / Rendición de Gastos">
+                    <group>
+                        <group>
+                            <field name="order_repair_ids" widget="one2many_list"/>
+                        </group>
+                        <group>
+                            <field name="rendicion_gastos_ids" widget="one2many_list"/>
+                        </group>
+                    </group>
+                </page>
+
 
             </notebook>
             <xpath expr="//tree/field[@name='price_unit']" position="before">

@@ -168,6 +168,26 @@ class ExcepcionesVenta(models.Model):
     instrucciones_cliente = fields.Text(compute='_Instrucciones_Cliente')
     observaciones = fields.Char(string="Obs.Venta", related='partner_id.obs_venta')
     recibe_cliente = fields.Char(string="Quien Recibe?")
+    order_repair_ids = fields.One2many(comodel_name="mrp.repair", inverse_name="orden_venta", string="Ordenes de Reparación", required=False, )
+    rendicion_gastos_ids = fields.One2many(comodel_name="hr.expense", inverse_name="sale_order_id", string="Redición de Gastos", required=False, )
+    tota_armado = fields.Integer(string="Costo Armado Equipo", required=False,compute="_compute_amount_costo_armado")
+    total_rendiciones = fields.Integer(string="Costo Armado Equipo", required=False,compute="_compute_amount_costo_armado")
+    costo_armado_rendicion = fields.Integer(string="Costo Armado Equipo", required=False,compute="_compute_amount_costo_armado" )
+
+    @api.one
+    @api.depends('order_repair_ids','rendicion_gastos_ids')
+    def _compute_amount_costo_armado(self):
+        total_armado=0
+        total_gastos=0
+        armado=self.env["mrp.repair"].search([('orden_venta','=',self.id)])
+        for i in armado:
+            total_armado+=i.amount_total
+            self.tota_armado=total_armado
+        gastos=self.env["hr.expense"].search([('sale_order_id','=',self.id)])
+        for i in gastos:
+            total_gastos+=i.total_amount
+            self.total_rendiciones=total_gastos
+        self.costo_armado_rendicion=total_armado+total_gastos
 
     @api.one
     @api.constrains('es_muestra')
