@@ -170,8 +170,8 @@ class ExcepcionesVenta(models.Model):
     recibe_cliente = fields.Char(string="Quien Recibe?")
     order_repair_ids = fields.One2many(comodel_name="mrp.repair", inverse_name="orden_venta", string="Ordenes de Reparación", required=False, )
     rendicion_gastos_ids = fields.One2many(comodel_name="hr.expense", inverse_name="sale_order_id", string="Redición de Gastos", required=False, )
-    tota_armado = fields.Integer(string="Costo Armado Equipo", required=False,compute="_compute_amount_costo_armado")
-    total_rendiciones = fields.Integer(string="Costo Armado Equipo", required=False,compute="_compute_amount_costo_armado")
+    tota_armado = fields.Integer(string="Total Armado", required=False,compute="_compute_amount_costo_armado")
+    total_rendiciones = fields.Integer(string="Total rendiciones de gastos", required=False,compute="_compute_amount_costo_armado")
     costo_armado_rendicion = fields.Integer(string="Costo Armado Equipo", required=False,compute="_compute_amount_costo_armado" )
 
     @api.one
