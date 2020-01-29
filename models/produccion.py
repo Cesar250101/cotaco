@@ -40,4 +40,9 @@ class NewModule(models.Model):
     nro_formula = fields.Char(string='Nro. Formula')
     version_formula = fields.Char(string='Versión Formula')
 
+class OrdenTrabajo(models.Model):
+    _inherit = 'mrp.production'
 
+    nro_reactor = fields.Char(string="Nro. Reactor", required=False, )
+    employee_id = fields.Many2one(comodel_name="hr.employee", string="Trabajador", required=False, )
+    category_id = fields.Char(string="Categoría", required=False, related="product_id.product_tmpl_id.categ_id.complete_name" )

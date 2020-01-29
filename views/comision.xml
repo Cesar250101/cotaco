@@ -1,0 +1,26 @@
+<odoo>
+  <data>
+
+    <record id="tree_view_comision_equipo" model="ir.ui.view">
+        <field name="name">tree.view.comision.equipo</field>
+        <field name="model">comision.equipos</field>
+        <field name="arch" type="xml">
+            <tree string="Tabla comisiones de equipos" editable="bottom">
+              <field name="factor"/>
+              <field name="porc_vendedor"/>
+              <field name="porc_margen"/>
+            </tree>
+        </field>
+    </record>
+
+      <record model="ir.actions.act_window" id="action_comision_equipo">
+        <field name="name">Tabla % Comisión Equipos</field>
+        <field name="res_model">comision.equipos</field>
+        <field name="view_mode">tree</field>
+    </record>
+
+    <menuitem id="menu_comision_equipos" parent="sale.menu_sale_config" name="Tabla Comisión Equipos" sequence="11"
+          action="action_comision_equipo" groups="base.group_system"/>
+
+  </data>
+</odoo>

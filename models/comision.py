@@ -4,6 +4,14 @@ from odoo import models, fields, api
 from datetime import datetime, date, time, timedelta
 
 
+class TablaComisionEquipos(models.Model):
+    _name = "comision.equipos"
+
+    factor = fields.Float(string="Factor",  required=False, )
+    porc_vendedor= fields.Float(string="% Comisión Vendedor",  required=False, )
+    porc_margen= fields.Float(string="% Margen",  required=False, )
+
+
 class ComisionTramo(models.Model):
     _name = "comision.tramo"
 

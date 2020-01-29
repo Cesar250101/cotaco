@@ -41,6 +41,7 @@
         'views/users.xml',
         'views/pagos.xml',
         'views/calidad.xml',
+        'views/comision.xml',
         'reports/etiquetas.xml',
         'reports/etiquetas_template.xml',
     ],
