@@ -33,8 +33,8 @@
 
             </xpath>
             <xpath expr="//tree/field[@name='product_qty']" position="after">
-                <field name="costo_materia_prima" sum="Costo Total" readonly="True"/>
-
+                <field name="costo_materia_prima" readonly="True"/>
+                <field name="subtotal_materia_prima" sum="Total Costo" readonly="True"/>
             </xpath>
 
         </field>

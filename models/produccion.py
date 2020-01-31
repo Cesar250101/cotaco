@@ -19,6 +19,12 @@ class ListaMateriales(models.Model):
     costo_materia_prima = fields.Float(string='Costo Materia Prima',
                             store=True,
                             related='product_id.product_tmpl_id.standard_price')
+    subtotal_materia_prima = fields.Float(string="SubTotal",  required=False, compute="_compute_amount")
+
+    @api.one
+    @api.depends('costo_materia_prima','product_qty')
+    def _compute_amount(self):
+        self.subtotal_materia_prima=self.product_qty*self.costo_materia_prima
 
 class Produccion(models.Model):
     _inherit = 'mrp.workorder'
