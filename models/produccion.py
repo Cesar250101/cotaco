@@ -16,12 +16,9 @@ class ListaMateriales(models.Model):
     codigo_mp = fields.Text(string='Código Materia Prima',
                                    store=True,
                                    related='product_id.product_tmpl_id.description')
-    #qty_kilos = fields.Float(string="Cantidad Kilos",  required=False, )
-
-    #@api.onchange('qty_kilos')
-    #def _onchange_qty_kilos(self):
-    #    self.product_qty=self.densidad*self.qty_kilos
-
+    costo_materia_prima = fields.Float(string='Costo Materia Prima',
+                            store=True,
+                            related='product_id.product_tmpl_id.standard_price')
 
 class Produccion(models.Model):
     _inherit = 'mrp.workorder'
