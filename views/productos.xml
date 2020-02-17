@@ -41,6 +41,14 @@
             <xpath expr="//field[@name='uom_po_id']" position="after">
                 <field name="comision_equipos"/>
             </xpath>
+            <xpath expr="//group[@name='description_internal']" position="after">
+                <group name="Resumen Deecriptivo">
+                    <group>
+                        <field name="resumen_descriptivo" nolabel="1" placeholder="Ingrese el resumen descriptivo del producto para la emisión de etiquetas"/>
+                    </group>
+                </group>
+            </xpath>
+
           <xpath expr="//page[@name='notes']" position="after">
                 <page name="estiqueta" string="Etiqueta">
                     <group>

@@ -42,6 +42,7 @@ class ProductoClaseUN(models.Model):
     product_doc_seguridad = fields.Many2one('cotaco.doc', string='Hoja de Seguridad')
     product_doc_calidad = fields.Many2one('cotaco.doc', string='Ficha Técnica')
     comision_equipos = fields.Boolean(string="Va a comisión de equipos",  )
+    resumen_descriptivo = fields.Text(string="Resumen Descriptivo", required=False, )
 
     @api.one
     @api.depends('item_ids')

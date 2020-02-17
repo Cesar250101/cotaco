@@ -171,8 +171,14 @@ class ExcepcionesVenta(models.Model):
     order_repair_ids = fields.One2many(comodel_name="mrp.repair", inverse_name="orden_venta", string="Ordenes de Reparación", required=False, )
     rendicion_gastos_ids = fields.One2many(comodel_name="hr.expense", inverse_name="sale_order_id", string="Redición de Gastos", required=False, )
     tota_armado = fields.Integer(string="Total Armado", required=False,compute="_compute_amount_costo_armado")
-    total_rendiciones = fields.Integer(string="Total rendiciones de gastos", required=False,compute="_compute_amount_costo_armado")
+    total_rendiciones = fields.Integer(string="Total gastos", required=False,compute="_compute_amount_costo_armado")
     costo_armado_rendicion = fields.Integer(string="Costo Armado Equipo", required=False,compute="_compute_amount_costo_armado" )
+    factor_comision_equipo = fields.Float(string="Factor",  required=False, store=True,)
+    valor_comision=fields.Integer(string="Valor Comisión", required=False,compute="_compute_amount_costo_armado" )
+
+    @api.onchange('total_rendiciones','costo_armado_rendicion','amount_untaxed')
+    def _onchange_factor_comision_equipo(self):
+        self.factor_comision_equipo=self.amount_untaxed/(self.total_rendiciones+self.tota_armado)
 
     @api.one
     @api.depends('order_repair_ids','rendicion_gastos_ids')
@@ -188,6 +194,10 @@ class ExcepcionesVenta(models.Model):
             total_gastos+=i.total_amount
             self.total_rendiciones=total_gastos
         self.costo_armado_rendicion=total_armado+total_gastos
+        self.factor_comision_equipo=self.amount_untaxed/(total_armado+total_gastos)
+        por_comision = self.env["comision.equipos"].search([('factor', '>=', self.factor_comision_equipo)],
+                                                           limit=1).porc_vendedor
+        self.valor_comision = self.amount_untaxed * (por_comision / 100)
 
     @api.one
     @api.constrains('es_muestra')

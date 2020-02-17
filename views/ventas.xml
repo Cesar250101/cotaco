@@ -33,6 +33,8 @@
                         <field name="tota_armado" widget="Monetary"/>
                         <field name="total_rendiciones" widget="Monetary"/>
                         <field name="costo_armado_rendicion" widget="Monetary"/>
+                        <field name="factor_comision_equipo" widget="Monetary"/>
+                        <field name="valor_comision" widget="Monetary"/>
                     </group>
                 </group>
             </xpath>
@@ -126,52 +128,6 @@
                 </field>
         </field>
     </record>
-
-
-    <record model="ir.ui.view" id="view_comision_tramo_tree">
-        <field name="name">view.comision.tramo.tree</field>
-        <field name="model">comision.tramo</field>
-        <field name="priority" eval="16"/>
-        <field name="arch" type="xml">
-          <tree string="Tramos">
-              <field name="desde"  width="20px"/>
-              <field name="hasta"  width="20px"/>
-              <field name="comision"  width="20px"/>
-          </tree>
-        </field>
-    </record>
-
-    <record model="ir.actions.act_window" id="action_comision_tramos">
-        <field name="name">Tramos de Comisión</field>
-        <field name="res_model">comision.tramo</field>
-        <field name="view_mode">tree,form</field>
-    </record>
-    <menuitem id="menu_comision_tramos" parent="l10n_cl_hr.menu_cl_hr_payroll_configuration" name="Tramos Comisión" sequence="10"
-          action="action_comision_tramos"/>
-
-    <record model="ir.ui.view" id="view_comision_factorizacion_tree">
-        <field name="name">view.comision.factorizacion.tree</field>
-        <field name="model">comision.factorizacion</field>
-        <field name="priority" eval="16"/>
-        <field name="arch" type="xml">
-          <tree string="Factorización">
-              <field name="descuento"  width="20px"/>
-              <field name="factor"  width="20px"/>
-          </tree>
-        </field>
-    </record>
-
-
-
-
-    <record model="ir.actions.act_window" id="action_comision_factorizacion">
-        <field name="name">Factorización Comisión</field>
-        <field name="res_model">comision.factorizacion</field>
-        <field name="view_mode">tree,form</field>
-    </record>
-
-    <menuitem id="menu_comision_factorizacion" parent="l10n_cl_hr.menu_cl_hr_payroll_configuration" name="Factorización Comisión" sequence="11"
-          action="action_comision_factorizacion"/>
 
 
 
