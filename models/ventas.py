@@ -197,7 +197,8 @@ class ExcepcionesVenta(models.Model):
         self.factor_comision_equipo=self.amount_untaxed/(total_armado+total_gastos)
         por_comision = self.env["comision.equipos"].search([('factor', '>=', self.factor_comision_equipo)],
                                                            limit=1).porc_vendedor
-        self.valor_comision = self.amount_untaxed * (por_comision / 100)
+        if  por_comision!=0:
+            self.valor_comision = self.amount_untaxed * (por_comision / 100)
 
     @api.one
     @api.constrains('es_muestra')

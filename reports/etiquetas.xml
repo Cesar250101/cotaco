@@ -1,6 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <data>
+
+       	<report
+       		id="Etiqueta_Autoadhesiva_Chica"
+       		string="Etiqueta Producto 10 X 6 Cm."
+       		model="stock.production.lot"
+       		report_type="qweb-html"
+       		name="cotaco.report_etiqueta_chica"
+            file="cotaco.report_etiqueta_chica"
+            paperformat="etiqueta_chica"/>
+
+		<record id="etiqueta_chica" model="report.paperformat">
+		    <field name="name">Etique Chica</field>
+		    <field name="default" eval="True"/>
+		    <field name="format">custom</field>
+			<field name="page_height">60</field>
+        	<field name="page_width">100</field>
+        	<field name="orientation">Portrait</field>
+		    <field name="margin_top">10</field>
+		    <field name="margin_bottom">10</field>
+		    <field name="margin_left">10</field>
+		    <field name="margin_right">10</field>
+		    <field name="header_spacing">20</field>
+		</record>
+
+
+        <record id="etiqueta_medina" model="report.paperformat">
+		    <field name="name">Etique Mediana</field>
+		    <field name="default" eval="True"/>
+		    <field name="format">custom</field>
+			<field name="page_height">110</field>
+        	<field name="page_width">263</field>
+        	<field name="orientation">Portrait</field>
+		    <field name="margin_top">10</field>
+		    <field name="margin_bottom">10</field>
+		    <field name="margin_left">10</field>
+		    <field name="margin_right">10</field>
+		    <field name="header_spacing">20</field>
+		</record>
+
+       	<report
+       		id="Etiqueta_Autoadhesiva_mediana"
+       		string="Etiqueta Producto 26.3 X 11 Cm."
+       		model="stock.production.lot"
+       		report_type="qweb-html"
+       		name="cotaco.report_etiqueta_mediana"
+            file="cotaco.report_etiqueta_mediana"
+            paperformat="etiqueta_medina"/>
+
+
         <record id="formato_general" model="report.paperformat">
 		    <field name="name">General</field>
 		    <field name="default" eval="True"/>
