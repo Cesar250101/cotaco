@@ -194,11 +194,12 @@ class ExcepcionesVenta(models.Model):
             total_gastos+=i.total_amount
             self.total_rendiciones=total_gastos
         self.costo_armado_rendicion=total_armado+total_gastos
-        self.factor_comision_equipo=self.amount_untaxed/(total_armado+total_gastos)
-        por_comision = self.env["comision.equipos"].search([('factor', '>=', self.factor_comision_equipo)],
-                                                           limit=1).porc_vendedor
-        if  por_comision!=0:
-            self.valor_comision = self.amount_untaxed * (por_comision / 100)
+        if (total_armado+total_gastos)!=0:
+            self.factor_comision_equipo=self.amount_untaxed/(total_armado+total_gastos)
+            por_comision = self.env["comision.equipos"].search([('factor', '>=', self.factor_comision_equipo)],
+                                                               limit=1).porc_vendedor
+            if  por_comision!=0:
+                self.valor_comision = self.amount_untaxed * (por_comision / 100)
 
     @api.one
     @api.constrains('es_muestra')
