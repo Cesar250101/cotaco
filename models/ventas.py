@@ -178,7 +178,8 @@ class ExcepcionesVenta(models.Model):
 
     @api.onchange('total_rendiciones','costo_armado_rendicion','amount_untaxed')
     def _onchange_factor_comision_equipo(self):
-        self.factor_comision_equipo=self.amount_untaxed/(self.total_rendiciones+self.tota_armado)
+        if (self.total_rendiciones+self.tota_armado)>0:
+            self.factor_comision_equipo=self.amount_untaxed/(self.total_rendiciones+self.tota_armado)
 
     @api.one
     @api.depends('order_repair_ids','rendicion_gastos_ids')
