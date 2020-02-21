@@ -2,15 +2,6 @@
 <odoo>
     <data>
 
-       	<report
-       		id="Etiqueta_Autoadhesiva_Chica"
-       		string="Etiqueta Producto 10 X 6 Cm."
-       		model="stock.production.lot"
-       		report_type="qweb-html"
-       		name="cotaco.report_etiqueta_chica"
-            file="cotaco.report_etiqueta_chica"
-            paperformat="etiqueta_chica"/>
-
 		<record id="etiqueta_chica" model="report.paperformat">
 		    <field name="name">Etique Chica</field>
 		    <field name="default" eval="True"/>
@@ -24,6 +15,15 @@
 		    <field name="margin_right">10</field>
 		    <field name="header_spacing">20</field>
 		</record>
+
+       	<report
+       		id="Etiqueta_Autoadhesiva_Chica"
+       		string="Etiqueta Producto 10 X 6 Cm."
+       		model="stock.production.lot"
+       		report_type="qweb-html"
+       		name="cotaco.report_etiqueta_chica"
+            file="cotaco.report_etiqueta_chica"
+            paperformat="etiqueta_chica"/>
 
 
         <record id="etiqueta_medina" model="report.paperformat">
