@@ -7,92 +7,48 @@
                 <t t-call="web.basic_layout">
                 <t t-call="web.html_container">
                     <t t-foreach="docs" t-as="o">
-                            <div class="page">
-                            <div style="position:relative;left:-25px;border: 3px solid red;text-align: center;font-size:20px;padding-bottom:0px !important; height:145px; width:360px;">
-                              <h6 style="color:red;font-size:20px;padding-bottom:10px; padding-top:5px; font-family:Arial;">
-                                  R.U.T.: <span t-field="company.document_number"/>
-                              </h6>
-                              <h6 name="document_class_id" t-if="document_class_id" style="line-height:23px;font-size:20px;color:red;text-align:center;text-transform:uppercase;padding-bottom:10px;font-family:Arial;">
-                                 <span t-field="document_class_id.name"/>
-                              </h6>
-                              <h6 t-if="sii_document_number" style="color: red;text-align: center;font-size:20px;padding-bottom:5px;font-family:Arial;">
-                                  N° <span t-esc="sii_document_number"/>
-                              </h6>
-                              <br/>
-                            </div>
+                        <div class="page">
                                 <div class="row">
-                                    <p> Lote : <h3 align="center" t-field="o.name"></h3></p>
-                                </div>
-                                <div class="row">
-                                    <div class="col-xs-4">
-                                        <p t-field="o.product_id.uso_texto"></p>
-                                        <br></br>
-                                        <p t-field="o.product_id.almacen_texto"></p>
-                                        <br></br>
-                                        <p t-field="o.product_id.precaucion_texto"></p>
-                                        <br></br>
-                                        <p t-field="o.product_id.composicion_texto"></p>
+                                    <div style="position:absolute;right:20px;top: 20px;">
+                                        <span t-field="o.product_id.nro_rombo_inflamable"></span>
                                     </div>
-                                    <div class="col-xs-4">
-                                        <p t-field="o.product_id.primeros_auxilios_texto"></p>
+                                    <div style="position:absolute;right:35px;top: 35px;">
+                                        <span t-field="o.product_id.nro_rombo_salud"></span>
                                     </div>
-                                    <div class="col-xs-4">
-                                        <br></br>
-                                        <br></br>
-                                        <table>
-                                            <tr></tr>
-                                          <tr>
-                                            <td><strong>N.U. :</strong></td>
-                                            <td><strong><p t-field="o.product_id.nu"></p></strong></td>
-                                          </tr>
-                                            <tr></tr>
-                                          <tr>
-                                            <td><strong>Clase :</strong></td>
-                                            <td><strong><p t-field="o.product_id.clase"></p></strong></td>
-                                          </tr>
-                                            <tr></tr>
-                                          <tr>
-                                            <td><strong>Registro ISP :</strong></td>
-                                            <td><strong><p t-field="o.product_id.registro_isp"></p></strong></td>
-                                          </tr>
-                                            <tr></tr>
-                                          <tr>
-                                            <td><strong>Lote de Producción :</strong></td>
-                                            <td><strong><p t-field="o.name"></p></strong></td>
-                                          </tr>
-                                            <tr></tr>
-                                            <tr>
-                                            <td><strong>Fecha de Elaboración :</strong></td>
-                                            <td><strong><p t-field="o.create_date"></p></strong></td>
-                                          </tr>
-                                            <tr></tr>
-                                          <tr>
-                                            <td><strong>Fecha de Vencimiento :</strong></td>
-                                            <td><strong><p t-field="o.life_date"></p></strong></td>
-                                          </tr>
-
-                                        </table>
+                                    <div style="position:absolute;right:15px;top: 35px;">
+                                        <span t-field="o.product_id.nro_rombo_reactividad"></span>
                                     </div>
-                                </div>
-                                <div class="row">
-                                    <t t-set="content" t-value="o.barcode" align="right"/>
-                                    <img class="barcode" t-att-src="'/report/barcode/?type=%s&amp;value=%s&amp;width=%s&amp;height=%s&amp;humanreadable=1' % ('Code128', content, 600, 100)"/>
-                                </div>
-                                <div class="row">
-                                    <div class="col-xs-4"></div>
-                                    <div class="col-xs-4"></div>
-                                    <div class="col-xs-4" align="center">
-                                        <span t-field="o.product_id.nro_rombo_inflamable"></span><br></br>
-                                        <span t-field="o.product_id.nro_rombo_salud"></span><span>    </span>
-                                        <span t-field="o.product_id.nro_rombo_reactividad"></span><br></br>
+                                    <div style="position:absolute;right:20px;top: 45px;">
                                         <span t-field="o.product_id.nro_rombo_caract_especial"></span>
                                     </div>
                                 </div>
-                            </div>
-
-                        </t>
-                     </t>
-                 </t>
+                                <div class="row">
+                                    <p><h1 align="left" t-field="o.product_id.name"></h1></p>
+                                    <p><h3 align="left" t-field="o.product_id.resumen_descriptivo"></h3></p>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-9">
+                                            <strong>Lote de Producción :</strong>
+                                            <strong><span t-field="o.name"></span></strong>
+                                            <strong>Fecha de Elaboración :</strong>
+                                            <strong><p t-field="o.create_date"></p></strong>
+                                            <strong>Fecha de Vencimiento :</strong>
+                                            <strong><p t-field="o.life_date"></p></strong>
+                                    </div>
+                                    <div class="col-xs-3" style="position:relative;right:50px;top: 70px;">
+                                        <t t-set="content" t-value="o.barcode" align="right"/>
+                                        <img class="barcode" t-att-src="'/report/barcode/?type=%s&amp;value=%s&amp;width=%s&amp;height=%s&amp;humanreadable=1' % ('Code128', content, 200, 50)"/>
+                                        <br></br>
+                                        <strong>NU :</strong>
+                                        <strong><p t-field="o.product_id.nu"></p></strong>
+                                        <strong>Clase :</strong>
+                                        <strong><p t-field="o.product_id.clase"></p></strong>
+                                    </div>
+                                </div>
+                        </div>
+                    </t>
+                </t>
+                </t>
         </t>
     </template>
 
@@ -155,21 +111,28 @@
                                             <td><strong>Fecha de Vencimiento :</strong></td>
                                             <td><strong><p t-field="o.life_date"></p></strong></td>
                                           </tr>
-
+                                          <tr>
+                                            <td>
+                                                <div class="row" style="position:absolute;right:-25px;top: 250px;">
+                                                    <t t-set="content" t-value="o.barcode" align="right"/>
+                                                    <img class="barcode" t-att-src="'/report/barcode/?type=%s&amp;value=%s&amp;width=%s&amp;height=%s&amp;humanreadable=1' % ('Code128', content, 400, 50)"/>
+                                                </div>
+                                            </td>
+                                          </tr>
                                         </table>
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <t t-set="content" t-value="o.barcode" align="right"/>
-                                    <img class="barcode" t-att-src="'/report/barcode/?type=%s&amp;value=%s&amp;width=%s&amp;height=%s&amp;humanreadable=1' % ('Code128', content, 600, 100)"/>
-                                </div>
-                                <div class="row">
-                                    <div class="col-xs-4"></div>
-                                    <div class="col-xs-4"></div>
-                                    <div class="col-xs-4" align="center">
-                                        <span t-field="o.product_id.nro_rombo_inflamable"></span><br></br>
-                                        <span t-field="o.product_id.nro_rombo_salud"></span><span>    </span>
-                                        <span t-field="o.product_id.nro_rombo_reactividad"></span><br></br>
+                                    <div style="position:absolute;right:85px;top: 450px;">
+                                        <span t-field="o.product_id.nro_rombo_inflamable"></span>
+                                    </div>
+                                    <div style="position:absolute;right:100px;top: 480px;">
+                                        <span t-field="o.product_id.nro_rombo_salud"></span>
+                                    </div>
+                                    <div style="position:absolute;right:75px;top: 480px;">
+                                        <span t-field="o.product_id.nro_rombo_reactividad"></span>
+                                    </div>
+                                    <div style="position:absolute;right:85px;top: 530px;">
                                         <span t-field="o.product_id.nro_rombo_caract_especial"></span>
                                     </div>
                                 </div>
@@ -189,72 +152,39 @@
                     <t t-foreach="docs" t-as="o">
                             <div class="page">
                                 <div class="row">
-                                    <p><h1 align="center" t-field="o.product_id.name"></h1></p>
-                                    <p><h3 align="center" t-field="o.product_id.resumen_descriptivo"></h3></p>
-                                </div>
-                                <div class="row">
-                                    <div class="col-xs-4">
-                                        <p t-field="o.product_id.uso_texto"></p>
-                                        <br></br>
-                                        <p t-field="o.product_id.almacen_texto"></p>
-                                        <br></br>
-                                        <p t-field="o.product_id.precaucion_texto"></p>
-                                        <br></br>
-                                        <p t-field="o.product_id.composicion_texto"></p>
+                                    <div style="position:absolute;right:20px;top: 20px;">
+                                        <span t-field="o.product_id.nro_rombo_inflamable"></span>
                                     </div>
-                                    <div class="col-xs-4">
-                                        <p t-field="o.product_id.primeros_auxilios_texto"></p>
+                                    <div style="position:absolute;right:25px;top: 25px;">
+                                        <span t-field="o.product_id.nro_rombo_salud"></span>
                                     </div>
-                                    <div class="col-xs-4">
-                                        <br></br>
-                                        <br></br>
-                                        <table>
-                                            <tr></tr>
-                                          <tr>
-                                            <td><strong>N.U. :</strong></td>
-                                            <td><strong><p t-field="o.product_id.nu"></p></strong></td>
-                                          </tr>
-                                            <tr></tr>
-                                          <tr>
-                                            <td><strong>Clase :</strong></td>
-                                            <td><strong><p t-field="o.product_id.clase"></p></strong></td>
-                                          </tr>
-                                            <tr></tr>
-                                          <tr>
-                                            <td><strong>Registro ISP :</strong></td>
-                                            <td><strong><p t-field="o.product_id.registro_isp"></p></strong></td>
-                                          </tr>
-                                            <tr></tr>
-                                          <tr>
-                                            <td><strong>Lote de Producción :</strong></td>
-                                            <td><strong><p t-field="o.name"></p></strong></td>
-                                          </tr>
-                                            <tr></tr>
-                                            <tr>
-                                            <td><strong>Fecha de Elaboración :</strong></td>
-                                            <td><strong><p t-field="o.create_date"></p></strong></td>
-                                          </tr>
-                                            <tr></tr>
-                                          <tr>
-                                            <td><strong>Fecha de Vencimiento :</strong></td>
-                                            <td><strong><p t-field="o.life_date"></p></strong></td>
-                                          </tr>
-
-                                        </table>
+                                    <div style="position:absolute;right:15px;top: 25px;">
+                                        <span t-field="o.product_id.nro_rombo_reactividad"></span>
                                     </div>
-                                </div>
-                                <div class="row">
-                                    <t t-set="content" t-value="o.barcode" align="right"/>
-                                    <img class="barcode" t-att-src="'/report/barcode/?type=%s&amp;value=%s&amp;width=%s&amp;height=%s&amp;humanreadable=1' % ('Code128', content, 600, 100)"/>
-                                </div>
-                                <div class="row">
-                                    <div class="col-xs-4"></div>
-                                    <div class="col-xs-4"></div>
-                                    <div class="col-xs-4" align="center">
-                                        <span t-field="o.product_id.nro_rombo_inflamable"></span><br></br>
-                                        <span t-field="o.product_id.nro_rombo_salud"></span><span>    </span>
-                                        <span t-field="o.product_id.nro_rombo_reactividad"></span><br></br>
+                                    <div style="position:absolute;right:20px;top: 30px;">
                                         <span t-field="o.product_id.nro_rombo_caract_especial"></span>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <p><h1 align="left" t-field="o.product_id.name"></h1></p>
+                                    <p><h3 align="left" t-field="o.product_id.resumen_descriptivo"></h3></p>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-9">
+                                            <strong>Lote de Producción :</strong>
+                                            <strong><span t-field="o.name"></span></strong>
+                                            <strong>Fecha de Elaboración :</strong>
+                                            <strong><p t-field="o.create_date"></p></strong>
+                                            <strong>Fecha de Vencimiento :</strong>
+                                            <strong><p t-field="o.life_date"></p></strong>
+                                    </div>
+                                    <div class="col-xs-3">
+                                        <t t-set="content" t-value="o.barcode" align="right"/>
+                                        <img class="barcode" t-att-src="'/report/barcode/?type=%s&amp;value=%s&amp;width=%s&amp;height=%s&amp;humanreadable=1' % ('Code128', content, 600, 100)"/>
+                                        <strong>NU :</strong>
+                                        <strong><p t-field="o.product_id.nu"></p></strong>
+                                        <strong>Clase :</strong>
+                                        <strong><p t-field="o.product_id.clase"></p></strong>
                                     </div>
                                 </div>
                             </div>
