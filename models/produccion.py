@@ -49,3 +49,5 @@ class OrdenTrabajo(models.Model):
     nro_reactor = fields.Char(string="Nro. Reactor", required=False, )
     employee_id = fields.Many2one(comodel_name="hr.employee", string="Trabajador", required=False, )
     category_id = fields.Char(string="Categoría", required=False, related="product_id.product_tmpl_id.categ_id.complete_name" )
+    metodo_fabricacion = fields.Text(string="Metodo de Fabricación", required=False,
+                              related="product_id.product_tmpl_id.metodo_fabricacion")

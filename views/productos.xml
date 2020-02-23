@@ -42,10 +42,14 @@
                 <field name="comision_equipos"/>
             </xpath>
             <xpath expr="//group[@name='description_internal']" position="after">
-                <group name="Resumen Deecriptivo">
-                    <group>
+                <group name="Resumen Descriptivo">
+                    <group string="Remunen Descriptivo">
                         <field name="resumen_descriptivo" nolabel="1" placeholder="Ingrese el resumen descriptivo del producto para la emisión de etiquetas"/>
                     </group>
+                    <group string="Metodo de Fabricación">
+                        <field name="metodo_fabricacion" nolabel="1" placeholder="Ingrese el resumen descriptivo del producto para la emisión de etiquetas"/>
+                    </group>
+
                 </group>
             </xpath>
 
