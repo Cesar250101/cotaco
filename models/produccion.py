@@ -51,8 +51,6 @@ class OrdenTrabajo(models.Model):
     category_id = fields.Char(string="Categoría", required=False, related="product_id.product_tmpl_id.categ_id.complete_name" )
     metodo_fabricacion = fields.Text(string="Metodo de Fabricación", required=False,
                               related="product_id.product_tmpl_id.metodo_fabricacion")
-    densidad = fields.Text(string="Densidad", required=False,
-                              related="product_id.product_tmpl_id.densidad")
     densidad = fields.Float(string="Densidad", required=False,
                            related="product_id.product_tmpl_id.densidad")
     version_formula = fields.Char(string="Densidad", required=False,
