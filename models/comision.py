@@ -34,7 +34,6 @@ class ComisionesAntiguos(models.Model):
 
     @api.one
     def calcular_comision(self):
-
         hoy = self.date_from
         # fechaStr = hoy.strftime("%Y-%m") + '-' + '01'
         fechaStr = hoy
@@ -70,78 +69,87 @@ class ComisionesAntiguos(models.Model):
             valor_uf = i.rate
 
         total_uf = total * valor_uf
+        contrato_id=self.env['hr.contract'].search([('employee_id','=',self.employee_id.id),('state', '=', 'open')])
 
+        #region Sistema antiguo de cálculo de comisión
         domain = [
-            ('code', '=', 'COMI'),
+            ('state', '=', 'open'),
+            ('employee_id', '=', self.employee_id.id)
         ]
-        rec = self.env['hr.payslip.input'].search(domain)
-        rec.write({'amount': total_uf})
+        tipo_comision=self.env['hr.contract'].search(domain,limit=1).tipo_comision
+        if tipo_comision=="antiguo":
+            domain = [
+                ('code', '=', 'COMI'),
+                ('contract_id', '=', contrato_id.id)
+            ]
+            rec = self.env['hr.payslip.input'].search(domain)
+            rec.write({'amount': total_uf})
 
-        domain = [
-            ('desde', '<', total_uf),
-            ('hasta', '>=', total_uf),
-        ]
+            domain = [
+                ('desde', '<', total_uf),
+                ('hasta', '>=', total_uf),
+            ]
 
-        tramo = self.env['comision.tramo'].search(domain)
-        for i in tramo:
-            porc_comision = i.comision / 100
+            tramo = self.env['comision.tramo'].search(domain)
+            for i in tramo:
+                porc_comision = i.comision / 100
 
-        domain = [
-            ('invoice_id', 'in', ids_invoice),
-        ]
-        invoice_line = self.env['account.invoice.line'].search(domain)
-        valor_comision = 0
-        for i in invoice_line:
-            paso = 1
-            precio = (i.price_subtotal / i.quantity)
-            factura = self.env['account.invoice'].search([('id', '=', i.invoice_id.id)])
+            domain = [
+                ('invoice_id', 'in', ids_invoice),
+            ]
+            invoice_line = self.env['account.invoice.line'].search(domain)
+            valor_comision = 0
+            for i in invoice_line:
+                paso = 1
+                precio = (i.price_subtotal / i.quantity)
+                factura = self.env['account.invoice'].search([('id', '=', i.invoice_id.id)])
 
-            for f in factura:
-                subtotal = f.amount_untaxed
-                descuento = f.amount_untaxed_global_discount
-                subtotal_original = subtotal + descuento
-                factor_dscto = descuento / subtotal_original
-                factor_dscto = 1 - factor_dscto
-                precio = precio * factor_dscto
+                for f in factura:
+                    subtotal = f.amount_untaxed
+                    descuento = f.amount_untaxed_global_discount
+                    subtotal_original = subtotal + descuento
+                    factor_dscto = descuento / subtotal_original
+                    factor_dscto = 1 - factor_dscto
+                    precio = precio * factor_dscto
 
-            factor_comision = 0
-            product_id = i.product_id.product_tmpl_id.id
-            preciolista = self.env['product.pricelist.item'].search([('product_tmpl_id', '=', product_id), ])
-            if preciolista:
-                matriz_precio = []
-                for r in preciolista:
-                    matriz_precio.append(r.fixed_price)
-                if precio < matriz_precio[0]:
-                    porc_descuento_precio = round((100 - ((i.price_unit * 100) / matriz_precio[0])), 1)
+                factor_comision = 0
+                product_id = i.product_id.product_tmpl_id.id
+                preciolista = self.env['product.pricelist.item'].search([('product_tmpl_id', '=', product_id), ])
+                if preciolista:
+                    matriz_precio = []
+                    for r in preciolista:
+                        matriz_precio.append(r.fixed_price)
+                    if precio < matriz_precio[0]:
+                        porc_descuento_precio = round((100 - ((i.price_unit * 100) / matriz_precio[0])), 1)
 
-                    domain = [
-                        ('descuento', '=', porc_descuento_precio),
-                    ]
-                    factor = self.env['comision.factorizacion'].search(domain)
-                    for n in factor:
-                        factor_comision = n.factor
-                    porc_comision_factorizada = porc_comision * factor_comision
+                        domain = [
+                            ('descuento', '=', porc_descuento_precio),
+                        ]
+                        factor = self.env['comision.factorizacion'].search(domain)
+                        for n in factor:
+                            factor_comision = n.factor
+                        porc_comision_factorizada = porc_comision * factor_comision
 
-                    valor_comision += i.price_subtotal * (porc_comision_factorizada / 100)
+                        valor_comision += i.price_subtotal * (porc_comision_factorizada / 100)
 
-                elif precio >= matriz_precio[0] and precio < matriz_precio[1]:
-                    if r.comision != 0:
-                        valor_comision += i.price_subtotal * (r.comision / 100)
-                    else:
-                        valor_comision = +i.price_subtotal * (porc_comision / 100)
-                elif precio >= matriz_precio[1] and precio < matriz_precio[2]:
-                    if r.comision != 0:
-                        valor_comision += i.price_subtotal * (r.comision / 100)
-                    else:
-                        valor_comision += i.price_subtotal * (porc_comision / 100)
-                elif precio >= matriz_precio[2]:
-                    if r.comision != 0:
-                        valor_comision += i.price_subtotal * (r.comision / 100)
-                    else:
-                        valor_comision += i.price_subtotal * (porc_comision / 100)
-        payslip = self.env['hr.payslip.input'].search([('code', '=', 'COMI')])
-        payslip.write({'amount': valor_comision})
-        return True
+                    elif precio >= matriz_precio[0] and precio < matriz_precio[1]:
+                        if r.comision != 0:
+                            valor_comision += i.price_subtotal * (r.comision / 100)
+                        else:
+                            valor_comision = +i.price_subtotal * (porc_comision / 100)
+                    elif precio >= matriz_precio[1] and precio < matriz_precio[2]:
+                        if r.comision != 0:
+                            valor_comision += i.price_subtotal * (r.comision / 100)
+                        else:
+                            valor_comision += i.price_subtotal * (porc_comision / 100)
+                    elif precio >= matriz_precio[2]:
+                        if r.comision != 0:
+                            valor_comision += i.price_subtotal * (r.comision / 100)
+                        else:
+                            valor_comision += i.price_subtotal * (porc_comision / 100)
+            payslip = self.env['hr.payslip.input'].search([('code', '=', 'COMI'),('contract_id','=',contrato_id.id)])
+            payslip.write({'amount': valor_comision})
+            return True
 
     @api.one
     def Factorizar(self, precio_lista, precio_factura, tramo_comision):

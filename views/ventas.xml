@@ -85,8 +85,11 @@
             </notebook>
             <xpath expr="//tree/field[@name='price_unit']" position="before">
                 <button name="action_show_details" string="" type="object" icon="fa-list"/>
-                <field name="user_id" required="True"/>
             </xpath>
+            <xpath expr="//field[@name='partner_shipping_id']" position="after">
+                <field name="user_id" widget="selection" required="True"/>
+            </xpath>
+
         </field>
     </record>
 
@@ -124,6 +127,7 @@
         <field name="inherit_id" ref="product.product_pricelist_item_tree_view"/>
         <field name="arch" type="xml">
                 <field name="date_end" position="after">
+                    <field name="fixed_price" />
                     <field name="comision" />
                 </field>
         </field>

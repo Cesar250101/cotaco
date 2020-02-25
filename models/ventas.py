@@ -41,26 +41,6 @@ class LineasPedidoVenta(models.Model):
     ultimo_precio = fields.Integer(string="Último Precio", required=False, )
     item_precios = fields.Char(string='Precios', compute='_Obtener_Precios')
 
-
-
-    # @api.one
-    # @api.constrains('price_unit')
-    # def check_costo_precio(self):
-    #     self.ensure_one()
-    #     # por compatibilidad con el modulo de sale_order_type_invoice_policy
-    #     #if self._context.get('by_pass_credit_limit', False):
-    #     #    return True
-    #     product_id=self.product_id.product_tmpl_id.id
-    #     domain = [
-    #         ('product_tmpl_id', '=', product_id),
-    #         ('pricelist_id', '=', 1)
-    #     ]
-    #     precio_uno = self.env['product.pricelist_item'].search(domain,limit=1).fixed_price
-    #     precio_uno=precio_uno*0,8
-    #
-    #     if self.price_unit < precio_uno:
-    #         raise ValidationError("Precio no puede ser menor al precio de venta mas bajo de la lista 1 (precio-20%)")
-
     def action_show_details(self):
         self.ensure_one()
         view = self.env.ref('cotaco.view_historial_venta_cliente')
@@ -92,19 +72,6 @@ class LineasPedidoVenta(models.Model):
             'ultima_venta': ultima_venta,
         }
 
-    # @api.one
-    # @api.constrains('user_id')
-    # def _check_vendedor(self):
-    #     vendedor=""
-    #     if self.order_id.partner_shipping_id and self.product_id:
-    #         if self.user_id=="":
-    #             raise ValidationError("Debe seleccionar un vendedor en cada línea de producto!")
-    #         division=self.env['product.category'].search([('id','=',self.product_id.categ_id.id)])
-    #         for d in division:
-    #             if 'Agua' in d.complete_name:
-    #                 vendedor=self.env['res.partner'].search([('id','=',self.order_id.partner_shipping_id.id)],limit=1).user_id
-    #             if 'Indust' in d.complete_name:
-    #                 vendedor=self.env['res.partner'].search([('id','=',self.order_id.partner_shipping_id.id)],limit=1).user_id_ti
 
     @api.onchange('product_id')
     def _onchange(self):
@@ -119,15 +86,6 @@ class LineasPedidoVenta(models.Model):
                     vendedor=self.env['res.partner'].search([('id','=',self.order_id.partner_shipping_id.id)])
                     for v in vendedor:
                         self.user_id=v.user_id_ti
-
-    # @api.onchange('user_id')
-    # def _onchange(self):
-    #     if self.user_id:
-    #         equipo_id=self.env['team.favorite.user.rel'].search([('user_id','=',self.user_id)])
-    #         for e in equipo_id:
-    #             self.team_id=e.team_id
-
-
 
 
     @api.one
@@ -175,6 +133,27 @@ class ExcepcionesVenta(models.Model):
     costo_armado_rendicion = fields.Integer(string="Costo Armado Equipo", required=False,compute="_compute_amount_costo_armado" )
     factor_comision_equipo = fields.Float(string="Factor",  required=False, store=True,)
     valor_comision=fields.Integer(string="Valor Comisión", required=False,compute="_compute_amount_costo_armado" )
+
+    @api.one
+    @api.constrains('user_id')
+    def _check_vendedor(self):
+        vendedor=""
+        if self.partner_shipping_id and self.product_id:
+            if self.user_id=="":
+                raise ValidationError("Debe seleccionar un vendedor para el documento!")
+
+            domain = [
+                ('id', '=', self.partner_shipping_id.id),
+                ('type', '=', 'delivery')
+            ]
+            vendedor_direccion=self.env["res.partner"].search(domain)
+            vendedor_ids=[]
+            for i in vendedor_direccion:
+                vendedor_ids.append(i.user_id.id)
+                vendedor_ids.append(i.user_id_ti.id)
+            if self.user_id.id not in vendedor_ids:
+                raise ValidationError("Vendedor no asignado a la dirección de despacho")
+
 
     @api.onchange('total_rendiciones','costo_armado_rendicion','amount_untaxed')
     def _onchange_factor_comision_equipo(self):
