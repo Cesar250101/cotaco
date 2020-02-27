@@ -11,6 +11,14 @@ class TablaComisionEquipos(models.Model):
     porc_vendedor= fields.Float(string="% Comisión Vendedor",  required=False, )
     porc_margen= fields.Float(string="% Margen",  required=False, )
 
+class ComisionTramoNuevo(models.Model):
+    _name = "comision.tramo.nuevo"
+
+    desde = fields.Float('UF > desde', required=True)
+    hasta = fields.Float('UF <= hasta', required=True)
+    comision = fields.Float('% comision', requiere=True)
+    bono_bencina=fields.Float('Bono Bencina', requiere=True)
+    descripcion = fields.Html(string="Descripción")
 
 class ComisionTramo(models.Model):
     _name = "comision.tramo"
@@ -130,7 +138,7 @@ class ComisionesAntiguos(models.Model):
                             factor_comision = n.factor
                         porc_comision_factorizada = porc_comision * factor_comision
 
-                        valor_comision += i.price_subtotal * (porc_comision_factorizada / 100)
+                        valor_comision += i.price_subtotal * (porc_comision_factorizada)
 
                     elif precio >= matriz_precio[0] and precio < matriz_precio[1]:
                         if r.comision != 0:
@@ -150,6 +158,33 @@ class ComisionesAntiguos(models.Model):
             payslip = self.env['hr.payslip.input'].search([('code', '=', 'COMI'),('contract_id','=',contrato_id.id)])
             payslip.write({'amount': valor_comision})
             return True
+        if tipo_comision=="nuevo":
+            domain = [
+                ('desde', '<', total_uf),
+                ('hasta', '>=', total_uf),
+            ]
+
+            tramo = self.env['comision.tramo.nuevo'].search(domain)
+            for i in tramo:
+                porc_comision = i.comision / 100
+                bono_bencina=i.bono_bencina
+
+            domain = [
+                ('id', 'in', ids_invoice),
+            ]
+            invoice = self.env['account.invoice'].search(domain)
+            valor_comision = 0
+            for i in invoice:
+                valor_comision += i.amount_untaxed * (porc_comision)
+
+            payslip = self.env['hr.payslip.input'].search([('code', '=', 'COMI'),('contract_id','=',contrato_id.id)])
+            payslip.write({'amount': valor_comision},)
+            payslip = self.env['hr.payslip.input'].search([('code', '=', 'BONBENC'),('contract_id','=',contrato_id.id)])
+            payslip.write({'amount': bono_bencina},)
+
+            return True
+
+
 
     @api.one
     def Factorizar(self, precio_lista, precio_factura, tramo_comision):

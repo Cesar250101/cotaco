@@ -55,6 +55,4 @@ class OrdenTrabajo(models.Model):
                            related="product_id.product_tmpl_id.densidad")
     version_formula = fields.Char(string="Versión Formula", required=False,
                            related="bom_id.version_formula")
-    # nombre_formula = fields.Char(string="Nombre Formula", required=False,
-    #                         related="bom_id.id.name")
 

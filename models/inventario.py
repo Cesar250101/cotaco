@@ -14,6 +14,18 @@ class NewModule(models.Model):
 
     codigo_mp = fields.Text(string="Materia Prima", related='product_id.product_tmpl_id.description')
 
+class Lote(models.Model):
+    _inherit = 'stock.move.line'
+
+    lote_leido = fields.Char(string="Lote Scaneado", required=False, )
+
+    @api.one
+    @api.constrains('lote_leido')
+    def _check_lote(self):
+        if self.lot_id.name!=self.lote_leido:
+            raise ValidationError("Número de lote no corresponde al que indica el sistema, N° Lote %s" % self.lot_id.name)
+
+
 
 class SeguimientoDespacho(models.Model):
     _inherit = 'stock.picking'
