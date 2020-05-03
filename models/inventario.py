@@ -47,6 +47,14 @@ class SeguimientoDespacho(models.Model):
     despacha_guia = fields.Boolean(string="Despachar con Guía", compute='_ObtieneDatosSO')
     instrucciones_cliente = fields.Text(compute='_Instrucciones_Cliente')
     observaciones = fields.Char(string="Obs.Venta", related='partner_id.obs_venta')
+    analytic_account_id = fields.Many2one(string='Proyecto',comodel_name='account.analytic.account',)
+
+    @api.onchange('project_id')
+    def _onchange_project_id(self):
+        for i in self.move_lines:
+            i.analityc_account_id=self.project_id
+        return True
+
 
     @api.depends('partner_id')
     def _Instrucciones_Cliente(self):
