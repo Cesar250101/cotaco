@@ -49,11 +49,11 @@ class SeguimientoDespacho(models.Model):
     observaciones = fields.Char(string="Obs.Venta", related='partner_id.obs_venta')
     analytic_account_id = fields.Many2one(string='Proyecto',comodel_name='account.analytic.account',)
 
-    @api.onchange('analytic_account_id')
-    def _onchange_project_id(self):
-        for i in self.move_lines:
-            i.analityc_account_id=self.project_id
-        return True
+    # @api.onchange('analytic_account_id')
+    # def _onchange_project_id(self):
+    #     for i in self.move_lines:
+    #         i.analityc_account_id=self.project_id
+    #     return True
 
 
     @api.depends('partner_id')
