@@ -19,6 +19,9 @@ class NewModule(models.Model):
     _inherit = 'stock.move'
 
     codigo_mp = fields.Text(string="Materia Prima", related='product_id.product_tmpl_id.description')
+    analytic_account_id = fields.Many2one(string='Analytic Account',comodel_name='account.analytic.account',
+                                          related="picking_id.analytic_account_id")
+
 
 class Lote(models.Model):
     _inherit = 'stock.move.line'
@@ -49,7 +52,7 @@ class SeguimientoDespacho(models.Model):
     observaciones = fields.Char(string="Obs.Venta", related='partner_id.obs_venta')
     analytic_account_id = fields.Many2one(string='Proyecto',comodel_name='account.analytic.account',)
 
-    @api.onchange('analytic_account_id')
+    @api.onchange('project_id')
     def _onchange_project_id(self):
         for i in self.move_lines:
             i.analityc_account_id=self.project_id
